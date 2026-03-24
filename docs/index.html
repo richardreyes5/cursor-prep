@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Deployment Manager — Study Guide</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Mobile toggle -->
+<button class="menu-toggle" aria-label="Toggle navigation">
+  <span></span><span></span><span></span>
+</button>
+<div class="overlay"></div>
+
+<!-- ─── Sidebar ─── -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h1>AI Deployment Manager</h1>
+    <div class="subtitle">Study Guide</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-part-label">Part I — Foundations</div>
+    <a class="nav-link" href="#ch1">How Software Gets Built</a>
+    <a class="nav-link" href="#ch2">A Day in the Life</a>
+    <a class="nav-link" href="#ch3">Building Blocks</a>
+
+    <div class="nav-part-label">Part II — AI Development</div>
+    <a class="nav-link" href="#ch4">How AI Coding Tools Work</a>
+    <a class="nav-link" href="#ch5">Cursor Deep Dive</a>
+    <a class="nav-link" href="#ch6">Strengths &amp; Limitations</a>
+
+    <div class="nav-part-label">Part III — The Developer</div>
+    <a class="nav-link" href="#ch7">Developer Pain Points</a>
+    <a class="nav-link" href="#ch8">Adoption Personas</a>
+    <a class="nav-link" href="#ch9">Thought Partnership</a>
+
+    <div class="nav-part-label">Part IV — Strategy</div>
+    <a class="nav-link" href="#ch10">Rollout Playbook</a>
+    <a class="nav-link" href="#ch11">High-Impact Use Cases</a>
+    <a class="nav-link" href="#ch12">Driving Adoption</a>
+    <a class="nav-link" href="#ch13">Measuring Success &amp; ROI</a>
+
+    <div class="nav-part-label">Part V — Practice</div>
+    <a class="nav-link" href="#ch14">Hands-On Plan</a>
+    <a class="nav-link" href="#ch15">Interview Prep</a>
+    <a class="nav-link" href="#ch16">Case Studies</a>
+
+    <div class="nav-part-label">Appendix</div>
+    <a class="nav-link" href="#mental-models">Mental Models</a>
+    <a class="nav-link" href="#glossary">Glossary</a>
+    <a class="nav-link" href="#cheat-sheet">Cheat Sheet</a>
+  </nav>
+  <div class="sidebar-footer">Last updated Mar 23, 2026</div>
+</aside>
+
+<!-- ─── Main content ─── -->
+<div class="main">
+<div class="content">
+
+<!-- Hero -->
+<div class="hero">
+  <h1>The AI Deployment Manager's Study Guide</h1>
+  <p class="lead">A sequential learning journey — from technical foundations to enterprise mastery.</p>
+  <p class="meta">By Richard Reyes &middot; Target: AI Deployment Manager at Cursor</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  PART I — TECHNICAL FOUNDATIONS        -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="ch1" id="part-i">
+  <div class="part-label">Part I</div>
+  <h2>Technical Foundations</h2>
+  <p class="part-intro">Before you can talk credibly about AI-powered development, you need to understand the world developers live in. This section gives you that foundation — no coding required.</p>
+</div>
+
+<!-- Chapter 1 -->
+<h3 class="chapter-title" id="ch1" data-section="ch1">Chapter 1: How Software Gets Built</h3>
+
+<p>Every piece of software — from a banking app to a video game — follows a lifecycle. Think of it like building a house.</p>
+
+<div class="img-block">
+  <img src="images/sdlc-cycle.png" alt="The Software Development Lifecycle">
+  <div class="caption">The Software Development Lifecycle (SDLC) — six phases that repeat in continuous cycles.</div>
+</div>
+
+<h4>The Six Phases</h4>
+
+<div class="table-wrapper">
+<table>
+  <thead><tr><th>Phase</th><th>House Analogy</th><th>Software Equivalent</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Planning</strong></td><td>"We need a 3-bedroom house with a pool"</td><td>Product requirements — what should the software do?</td></tr>
+    <tr><td><strong>Design</strong></td><td>Architect draws blueprints</td><td>System architecture — how will the pieces fit together?</td></tr>
+    <tr><td><strong>Development</strong></td><td>Construction crew builds</td><td>Developers write code</td></tr>
+    <tr><td><strong>Testing</strong></td><td>Building inspector checks work</td><td>QA and automated tests verify the code works</td></tr>
+    <tr><td><strong>Deployment</strong></td><td>Family moves in</td><td>Code goes live for users</td></tr>
+    <tr><td><strong>Maintenance</strong></td><td>Fixing the leaky faucet</td><td>Bug fixes, updates, new features</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>How Teams Actually Work</h4>
+
+<p>Most engineering teams today don't follow these steps in a straight line. They work in short cycles called <strong>sprints</strong> (usually 2 weeks), shipping small pieces continuously. This approach is called <strong>Agile development</strong>.</p>
+
+<div class="callout callout-insight">
+  <div class="callout-title">Key Insight for Your Role</div>
+  <p>Your job will involve fitting Cursor adoption into these existing rhythms — not disrupting them. If a team is mid-sprint on a critical feature, that's not the time to introduce a new tool. Understanding the cadence of how teams work is essential to deploying effectively.</p>
+</div>
+
+<!-- Chapter 2 -->
+<h3 class="chapter-title" id="ch2" data-section="ch2">Chapter 2: A Day in the Life of a Developer</h3>
+
+<p>To deploy AI tools to developers, you need to understand what their day actually looks like.</p>
+
+<h4>The Developer Workflow</h4>
+
+<ol>
+  <li><strong>Pull the latest code</strong> — Download teammates' recent changes (using Git)</li>
+  <li><strong>Pick up a task</strong> — From a project board (Jira, Linear, Asana)</li>
+  <li><strong>Write code</strong> — In an IDE like Cursor, VS Code, or IntelliJ</li>
+  <li><strong>Test locally</strong> — Run the code on their own machine to check it works</li>
+  <li><strong>Submit a Pull Request (PR)</strong> — Propose their changes for teammates to review</li>
+  <li><strong>Code Review</strong> — Other developers read and critique the code</li>
+  <li><strong>Merge &amp; Deploy</strong> — Approved code gets combined and shipped</li>
+</ol>
+
+<h4>Where Does AI Fit In?</h4>
+
+<p>Cursor primarily accelerates <strong>steps 3, 4, and 5</strong> — writing code, testing, and preparing changes for review. But its influence is expanding. The more of this workflow Cursor touches, the more valuable it becomes to the organization.</p>
+
+<div class="callout callout-tip">
+  <div class="callout-title">Tip</div>
+  <p>When you're in conversations with engineering leads, ask them to walk you through <em>their</em> version of this workflow. Every team has variations, and those details reveal where Cursor can have the greatest impact.</p>
+</div>
+
+<!-- Chapter 3 -->
+<h3 class="chapter-title" id="ch3" data-section="ch3">Chapter 3: The Building Blocks of Modern Software</h3>
+
+<p>You don't need to master these concepts — you need to recognize them in conversation and understand why developers care about them.</p>
+
+<h4>Git &amp; Version Control</h4>
+<p><strong>What it is:</strong> A system that tracks every change to code, like "Track Changes" in Google Docs but far more powerful. It lets hundreds of developers work on the same project without overwriting each other.</p>
+<p><strong>Key terms you'll hear:</strong> repository (repo), branch, commit, merge, pull request.</p>
+
+<h4>APIs (Application Programming Interfaces)</h4>
+<p><strong>The restaurant analogy:</strong> You (the customer/app) don't go into the kitchen. You order from the menu (the API), and the kitchen (the server) sends back what you asked for.</p>
+<p>Almost all modern software is built by connecting APIs together. A ride-share app calls a Maps API, a Payment API, an SMS API — all stitched together.</p>
+
+<h4>Databases</h4>
+<p>Think of a massive, organized filing cabinet that software reads from and writes to.</p>
+<ul>
+  <li><strong>Relational (SQL):</strong> Data in tables with rows and columns, like a spreadsheet (PostgreSQL, MySQL)</li>
+  <li><strong>Non-relational (NoSQL):</strong> More flexible storage, like a collection of documents (MongoDB, DynamoDB)</li>
+</ul>
+
+<h4>System Architecture</h4>
+
+<div class="table-wrapper">
+<table>
+  <thead><tr><th>Layer</th><th>What It Is</th><th>Analogy</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Frontend</strong></td><td>What users see and interact with</td><td>The building's facade</td></tr>
+    <tr><td><strong>Backend</strong></td><td>Logic, data, and processing behind the scenes</td><td>Plumbing and electrical</td></tr>
+    <tr><td><strong>Infrastructure</strong></td><td>Servers, networks, and cloud services</td><td>The land and utilities</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>Common pattern today:</strong> Microservices — instead of one giant application, companies build many small specialized services that communicate via APIs.</p>
+
+<h4>The Cloud (AWS, GCP, Azure)</h4>
+<p>Instead of buying physical servers, companies rent computing power from Amazon (AWS), Google (GCP), or Microsoft (Azure). This is how virtually all modern software runs.</p>
+
+<hr>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  PART II — AI-POWERED DEVELOPMENT      -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="ch4" id="part-ii">
+  <div class="part-label">Part II</div>
+  <h2>AI-Powered Development</h2>
+  <p class="part-intro">Now that you understand the developer's world, let's dive into the technology that's reshaping it.</p>
+</div>
+
+<!-- Chapter 4 -->
+<h3 class="chapter-title" id="ch4" data-section="ch4">Chapter 4: How AI Coding Tools Actually Work</h3>
+
+<h4>Large Language Models (LLMs), Explained</h4>
+
+<p>LLMs are AI models trained on enormous amounts of text — including millions of lines of code — that can predict and generate text.</p>
+
+<p><strong>Think of it this way:</strong> Imagine the world's most well-read assistant who has studied millions of codebases, documentation pages, and Q&amp;A forums. They don't "understand" code the way a human does, but they're extraordinarily good at pattern matching and generating plausible next steps.</p>
+
+<p>Key models: GPT-4 (OpenAI), Claude (Anthropic), and Gemini (Google). Cursor uses multiple models and routes to the best one for each task.</p>
+
+<h4>The Four-Step Pipeline</h4>
+
+<p>When a developer uses an AI coding tool, here's what happens under the hood:</p>
+
+<div class="img-block">
+  <img src="images/llm-pipeline.png" alt="How AI coding assistants process code">
+  <div class="caption">The four-step pipeline: Context Gathering → Prompt Construction → Model Inference → Output Rendering.</div>
+</div>
+
+<ol>
+  <li><strong>Context Gathering</strong> — Reads your open files, project structure, recent edits, and cursor position</li>
+  <li><strong>Prompt Construction</strong> — Builds a detailed prompt with all that context plus your request</li>
+  <li><strong>Model Inference</strong> — Sends the prompt to an LLM, which generates a response</li>
+  <li><strong>Output Rendering</strong> — Formats the response as code suggestions, inline edits, or chat answers</li>
+</ol>
+
+<h4>Key AI Concepts You Should Know</h4>
+
+<div class="table-wrapper">
+<table>
+  <thead><tr><th>Concept</th><th>Plain English</th><th>Why It Matters</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Prompt</strong></td><td>The instruction/question you give to the AI</td><td>Better prompts = better code output</td></tr>
+    <tr><td><strong>Context window</strong></td><td>How much text the AI can "see" at once (short-term memory)</td><td>Cursor's advantage is feeding the <em>right</em> context</td></tr>
+    <tr><td><strong>Tokens</strong></td><td>Units LLMs process (~1 token ≈ 0.75 words)</td><td>Larger context windows cost more but produce better results</td></tr>
+    <tr><td><strong>Hallucination</strong></td><td>When the AI confidently generates something incorrect</td><td>Users must always verify AI output</td></tr>
+    <tr><td><strong>Fine-tuning</strong></td><td>Training a model further on specific data</td><td>Some enterprises want models tuned to their codebase</td></tr>
+    <tr><td><strong>RAG</strong></td><td>Retrieval-Augmented Generation — fetching relevant docs first</td><td>How Cursor pulls in the right project files</td></tr>
+    <tr><td><strong>Latency</strong></td><td>How long it takes to get a response</td><td>Developers are impatient — speed matters enormously</td></tr>
+    <tr><td><strong>Agentic workflows</strong></td><td>AI that takes multi-step actions autonomously</td><td>Cursor's Agent mode — the frontier of AI coding</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout callout-insight">
+  <div class="callout-title">Bottom Line</div>
+  <p>You don't need to explain transformer architecture in an interview. But you <em>do</em> need to explain why context windows matter, what hallucinations are, and how Cursor uses RAG to stay grounded in a developer's actual codebase.</p>
+</div>
+
+<!-- Chapter 5 -->
+<h3 class="chapter-title" id="ch5" data-section="ch5">Chapter 5: Cursor — The AI-Native Code Editor</h3>
+
+<h4>What Makes Cursor Different</h4>
+
+<p>Cursor is a <strong>fork</strong> (modified version) of VS Code, the most popular code editor in the world. Instead of bolting AI on as a plugin, Cursor rebuilt the editor with AI woven into every interaction.</p>
+
+<blockquote>
+  <p><strong>The car analogy:</strong> It's the difference between a car with a phone mount (VS Code + Copilot) versus a car with a built-in infotainment system designed from scratch (Cursor). The integrated experience is fundamentally smoother.</p>
+</blockquote>
+
+<h4>The Five Features You Need to Know Cold</h4>
+
+<h5>1. Tab Autocomplete</h5>
+<p>As you type, Cursor predicts what you're about to write — not just the next word, but entire blocks of code. It understands your <em>whole project</em>, not just the current file. Developers report <strong>30–50% fewer keystrokes</strong>, reducing cognitive load, not just speed.</p>
+
+<h5>2. Cmd+K (Inline Editing)</h5>
+<p>Highlight code, press Cmd+K, describe what you want in plain English, and Cursor rewrites it. Select a function, type "add error handling and retry logic," and watch it transform. This is where the "aha moment" often happens.</p>
+
+<h5>3. Chat (Cmd+L)</h5>
+<p>A conversational AI that can see your entire codebase. Unlike ChatGPT, Cursor's chat knows <em>your</em> project — it references specific files, functions, and patterns.</p>
+
+<h5>4. Agent Mode (Cmd+I)</h5>
+<p>An autonomous AI that executes multi-step tasks: editing multiple files, running commands, fixing errors, iterating. If Chat is texting a contractor with questions, Agent mode is hiring one who shows up, does the work, and checks it. <strong>This is where the biggest enterprise productivity gains come from.</strong></p>
+
+<h5>5. Context Awareness (@-mentions)</h5>
+<p>Cursor indexes your entire codebase and lets you pull context with @ references (<code>@file</code>, <code>@folder</code>, <code>@codebase</code>, <code>@web</code>, <code>@docs</code>). The #1 problem with AI coding tools is context — Cursor solves this better than anyone.</p>
+
+<h4>Enterprise-Critical Features</h4>
+
+<div class="table-wrapper">
+<table>
+  <thead><tr><th>Feature</th><th>What It Does</th><th>Why Enterprises Care</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Rules &amp; Configuration</strong></td><td><code>.cursor/rules/</code> files give AI persistent coding standards</td><td>Scales across 500+ developers with consistency</td></tr>
+    <tr><td><strong>Privacy Mode</strong></td><td>Code never stored, never used for training</td><td>The #1 concern of every enterprise CTO</td></tr>
+    <tr><td><strong>SOC 2 Compliance</strong></td><td>Enterprise security certification</td><td>Clears security review hurdles</td></tr>
+    <tr><td><strong>Self-Hosted Options</strong></td><td>For the most security-conscious orgs</td><td>Opens the door for regulated industries</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Chapter 6 -->
+<h3 class="chapter-title" id="ch6" data-section="ch6">Chapter 6: Where Cursor Shines and Where It Struggles</h3>
+
+<p>Being credible means being honest about limitations. This is one of the strongest signals of trustworthiness in technical conversations.</p>
+
+<h4>Where Cursor Excels</h4>
+
+<div class="table-wrapper">
+<table>
+  <thead><tr><th>Use Case</th><th>Who Benefits</th><th>Impact</th></tr></thead>
+  <tbody>
+    <tr><td>Writing boilerplate code</td><td>All developers</td><td>High — eliminates tedious repetitive work</td></tr>
+    <tr><td>Understanding unfamiliar codebases</td><td>New hires, team-switchers</td><td>Very High — onboarding time drops dramatically</td></tr>
+    <tr><td>Writing tests</td><td>All developers</td><td>Very High — coverage increases with less effort</td></tr>
+    <tr><td>Code refactoring</td><td>Senior devs, tech leads</td><td>High — large-scale improvements become feasible</td></tr>
+    <tr><td>Debugging</td><td>All developers</td><td>High — AI analyzes errors and suggests fixes</td></tr>
+    <tr><td>Prototyping</td><td>Product teams, hackathons</td><td>Very High — ideas become code in hours</td></tr>
+    <tr><td>Learning new frameworks</td><td>Junior developers</td><td>High — teaches through example in context</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>Where Cursor Struggles</h4>
+
+<ol>
+  <li><strong>Hallucinations</strong> — Can generate plausible-looking code that's subtly wrong</li>
+  <li><strong>Large-scale architecture</strong> — Great at function-level, less reliable for entire systems</li>
+  <li><strong>Proprietary systems</strong> — Less training data for deeply custom internal frameworks</li>
+  <li><strong>Security-sensitive code</strong> — Crypto, auth, financial logic require human expertise</li>
+  <li><strong>Non-determinism</strong> — Same prompt can give different results each time</li>
+  <li><strong>Context limits</strong> — Truly massive codebases can exceed processing capacity</li>
+  <li><strong>Behavior change</strong> — Some experienced developers resist AI tools; adoption is cultural</li>
+</ol>
+
+<div class="callout callout-tip">
+  <div class="callout-title">How to Use This</div>
+  <p>When a CTO asks about limitations, don't dodge. Lead with honesty: <em>"Cursor is a power tool, not autopilot — it amplifies developer expertise, it doesn't replace their judgment."</em> That sentence builds more trust than any feature demo.</p>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  PART III — UNDERSTANDING THE DEVELOPER -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="ch7" id="part-iii">
+  <div class="part-label">Part III</div>
+  <h2>Understanding the Developer</h2>
+  <p class="part-intro">The best deployment managers aren't the most technical people in the room — they're the ones who understand developers as <em>people</em>. This section is about building that empathy.</p>
+</div>
+
+<!-- Chapter 7 -->
+<h3 class="chapter-title" id="ch7" data-section="ch7">Chapter 7: Developer Pain Points</h3>
+
+<p>These are the top frustrations developers face daily. Know them cold — they're the entry point to every enterprise conversation.</p>
+
+<div class="table-wrapper">
+<table>
+  <thead><tr><th>Pain Point</th><th>What It Feels Like</th><th>How Cursor Helps</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Context switching</strong></td><td>Being pulled between meetings, Slack, code review, and actual coding</td><td>Keeps devs in flow by bringing answers to them</td></tr>
+    <tr><td><strong>Boilerplate code</strong></td><td>Writing the same patterns over and over</td><td>Tab completion and Agent mode eliminate repetitive work</td></tr>
+    <tr><td><strong>Unfamiliar code</strong></td><td>"What does this function do?"</td><td>Chat with @codebase answers questions about any part of the project</td></tr>
+    <tr><td><strong>Debugging</strong></td><td>Hours tracking a bug that's a typo</td><td>AI analyzes errors and suggests fixes in seconds</td></tr>
+    <tr><td><strong>Documentation</strong></td><td>Code is rarely well-documented</td><td>AI generates docs from code automatically</td></tr>
+    <tr><td><strong>Slow feedback loops</strong></td><td>Waiting for tests, builds, PR reviews</td><td>Accelerates the write-test-review cycle</td></tr>
+    <tr><td><strong>Technical debt</strong></td><td>Knowing code should be improved but never having time</td><td>Agent mode makes refactoring feasible</td></tr>
+    <tr><td><strong>Tooling friction</strong></td><td>Tools that are slow or don't integrate well</td><td>Built from the ground up to be fast and integrated</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout callout-insight">
+  <div class="callout-title">For Your Role</div>
+  <p>Every conversation with an engineering team should probe for these pain points. The ones they emphasize most tell you where Cursor will have the biggest impact — and where to start the pilot.</p>
+</div>
+
+<!-- Chapter 8 -->
+<h3 class="chapter-title" id="ch8" data-section="ch8">Chapter 8: The Three Adoption Personas</h3>
+
+<p>Every engineering organization contains three types of people when it comes to new tool adoption. Your strategy for each is different.</p>
+
+<div class="img-block">
+  <img src="images/adoption-personas.png" alt="The Three Adoption Personas">
+  <div class="caption">Champions (15–20%), Pragmatists (60–70%), and Skeptics (10–20%).</div>
+</div>
+
+<h5>Champions (15–20%)</h5>
+<p>Already excited about AI tools. They'll adopt immediately and start evangelizing. <strong>Your job:</strong> Empower them with early access, advanced tips, and a platform to share wins. They'll do more for adoption than any top-down mandate.</p>
+
+<h5>Pragmatists (60–70%)</h5>
+<p>Open but cautious. They've seen tools come and go. <strong>Your job:</strong> Give them structured onboarding, quick wins, and real data from the pilot. Don't oversell — show peer results.</p>
+
+<h5>Skeptics (10–20%)</h5>
+<p>Resistant. They may think AI writes bad code or threatens their jobs. <strong>Your job:</strong> Don't fight them. Let the Champions' results speak. Often the strongest skeptics become the strongest advocates once they see genuine value — on their own terms.</p>
+
+<div class="formula-box">
+  <div class="formula">Adoption = (Value Perceived &times; Ease of Use) / (Switching Cost + Fear of Change)</div>
+  <div class="explanation">Your entire deployment strategy comes down to maximizing the numerator and minimizing the denominator.</div>
+</div>
+
+<!-- Chapter 9 -->
+<h3 class="chapter-title" id="ch9" data-section="ch9">Chapter 9: Becoming a Technical Thought Partner</h3>
+
+<h4>The Mindset Shift</h4>
+
+<p>You don't need to write code. You need to <strong>understand the problems developers face</strong> and <strong>connect those problems to solutions</strong>. Think of yourself as a translator between:</p>
+
+<ul>
+  <li><strong>Business goals</strong> ↔ Technical implementation</li>
+  <li><strong>Product capabilities</strong> ↔ Developer workflows</li>
+  <li><strong>Adoption strategy</strong> ↔ Engineering culture</li>
+</ul>
+
+<h4>The DEEP Questions Framework</h4>
+
+<div class="table-wrapper">
+<table>
+  <thead><tr><th>Letter</th><th>Step</th><th>Example Question</th></tr></thead>
+  <tbody>
+    <tr><td><strong>D</strong></td><td>Diagnose current state</td><td>"Walk me through how your team handles X today"</td></tr>
+    <tr><td><strong>E</strong></td><td>Explore the pain</td><td>"What's the most frustrating part of that workflow?"</td></tr>
+    <tr><td><strong>E</strong></td><td>Evaluate the impact</td><td>"If we solved that, what would change for your team?"</td></tr>
+    <tr><td><strong>P</strong></td><td>Propose a path</td><td>"What if we tried X — what concerns would you have?"</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>Good vs. Bad Questions</h4>
+
+<div class="table-wrapper">
+<table>
+  <thead><tr><th>Bad Question</th><th>Good Question</th></tr></thead>
+  <tbody>
+    <tr><td>"What programming languages do you use?"<br><em>Too surface-level</em></td><td>"Walk me through your typical workflow, from picking up a ticket to deploying."<br><em>Shows you care about process</em></td></tr>
+    <tr><td>"Do you use microservices?"<br><em>Yes/no kills conversation</em></td><td>"How is your codebase structured? One large app or split into services?"<br><em>Open-ended, invites explanation</em></td></tr>
+    <tr><td>"What are your pain points?"<br><em>Too vague</em></td><td>"When a new dev joins, how long until they're making meaningful contributions?"<br><em>Specific, measurable</em></td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>Translating Business Goals</h4>
+
+<div class="table-wrapper">
+<table>
+  <thead><tr><th>What the CTO Says</th><th>What It Means</th><th>How Cursor Helps</th></tr></thead>
+  <tbody>
+    <tr><td>"Increase velocity"</td><td>Reduce cycle time, remove bottlenecks</td><td>Agent mode for boilerplate, faster PR turnaround</td></tr>
+    <tr><td>"Do more with same headcount"</td><td>Make each developer more productive</td><td>1–2 hours saved per dev per day</td></tr>
+    <tr><td>"Too many bugs"</td><td>More test coverage, better code review</td><td>AI-generated tests, team-wide rules</td></tr>
+    <tr><td>"Attrition is too high"</td><td>Developers want modern tools</td><td>87% of devs say AI tools improve satisfaction</td></tr>
+    <tr><td>"New hires take 6 months"</td><td>Codebase complexity is a barrier</td><td>Cursor lets new devs ask questions conversationally</td></tr>
+  </tbody>
+</table>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  PART IV — DEPLOYMENT STRATEGY         -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="ch10" id="part-iv">
+  <div class="part-label">Part IV</div>
+  <h2>Enterprise Deployment Strategy</h2>
+  <p class="part-intro">This is the operational heart of your role. Everything in Parts I–III prepares you for this.</p>
+</div>
+
+<!-- Chapter 10 -->
+<h3 class="chapter-title" id="ch10" data-section="ch10">Chapter 10: The Enterprise Rollout Playbook</h3>
+
+<p>Enterprise AI tool adoption follows a proven four-phase pattern. Trying to skip phases is how deployments fail.</p>
+
+<div class="img-block">
+  <img src="images/rollout-timeline.png" alt="Four Phases of Enterprise AI Tool Rollout">
+  <div class="caption">The four phases: Discovery (Wk 1–2) → Pilot (Wk 3–6) → Expand (Wk 7–12) → Enterprise-Wide (Mo 4–6+).</div>
+</div>
+
+<h4>Phase 0: Discovery &amp; Assessment (Week 1–2)</h4>
+<p><strong>Goal:</strong> Understand the organization before proposing anything.</p>
+<ul>
+  <li>Meet with engineering leadership (CTO, VPs, Directors)</li>
+  <li>Interview 5–10 developers across different teams and seniority levels</li>
+  <li>Map the technology stack (languages, frameworks, tools, cloud provider)</li>
+  <li>Understand existing AI tool usage (Copilot? ChatGPT? Nothing?)</li>
+  <li>Identify security and compliance requirements</li>
+  <li>Map the decision-making process</li>
+</ul>
+
+<p><strong>Key discovery questions:</strong></p>
+<ul>
+  <li>"What does your development workflow look like end-to-end?"</li>
+  <li>"Where do developers spend time that isn't writing new features?"</li>
+  <li>"What's your current stance on AI coding tools?"</li>
+  <li>"What are your security requirements for developer tools?"</li>
+  <li>"How do you typically roll out new tools to engineering?"</li>
+</ul>
+
+<h4>Phase 1: Pilot Program (Week 3–6)</h4>
+<p><strong>Goal:</strong> Prove value with a small, motivated group.</p>
+
+<p><strong>Team selection criteria:</strong></p>
+<ul>
+  <li>10–25 developers (meaningful yet supportable)</li>
+  <li>Mix of senior and junior developers</li>
+  <li>Team with clear, measurable output</li>
+  <li>Ideally a team with a Champion already excited about AI</li>
+  <li>Avoid teams mid-critical-launch</li>
+</ul>
+
+<p><strong>Support model:</strong></p>
+<ul>
+  <li>Weekly 30-minute office hours</li>
+  <li>Daily async support in a shared channel</li>
+  <li>1:1 check-ins with 3–5 developers each week</li>
+  <li>Daily "Tip of the Day" sharing</li>
+</ul>
+
+<h4>Phase 2: Expand &amp; Optimize (Week 7–12)</h4>
+<p><strong>Goal:</strong> Scale from pilot to broader adoption with a proven playbook.</p>
+<ul>
+  <li>Compile pilot results into an internal case study with real numbers</li>
+  <li>Have Champions present their experience to other teams</li>
+  <li>Expand to 3–5 additional teams (50–100 developers)</li>
+  <li>Train pilot Champions to be peer mentors</li>
+  <li>Shift from high-touch to scalable support (workshops, docs, recorded demos)</li>
+  <li>Create a library of prompt templates for common tasks</li>
+</ul>
+
+<h4>Phase 3: Enterprise-Wide Rollout (Month 4–6+)</h4>
+<p><strong>Goal:</strong> Make Cursor the default development environment.</p>
+<ul>
+  <li>Executive presentation: ROI data, satisfaction, velocity improvements</li>
+  <li>Procurement: negotiate enterprise agreement</li>
+  <li>IT integration: SSO, Privacy Mode, usage policies</li>
+  <li>Organization-wide launch with team-by-team onboarding</li>
+  <li>Ongoing enablement: monthly workshops, new feature rollouts</li>
+  <li>Quarterly business reviews: usage data, ROI tracking, feedback loops</li>
+</ul>
+
+<!-- Chapter 11 -->
+<h3 class="chapter-title" id="ch11" data-section="ch11">Chapter 11: Choosing High-Impact Use Cases</h3>
+
+<p>Not all use cases are created equal. Start where effort is low and impact is immediate, then build toward more ambitious applications.</p>
+
+<div class="img-block">
+  <img src="images/impact-effort-matrix.png" alt="Impact-Effort Matrix for AI Coding Use Cases">
+  <div class="caption">Start in the top-left (high impact, low effort) and work toward the top-right as trust grows.</div>
+</div>
+
+<h4>The Recommended Sequence</h4>
+
+<p><strong>Start here (low effort, meaningful impact):</strong></p>
+<ol>
+  <li><strong>Tab completion</strong> — Zero behavior change. Suggestions just appear. Builds passive trust.</li>
+  <li><strong>Codebase Q&amp;A</strong> — Devs already ask questions; now they ask Cursor instead of interrupting a colleague.</li>
+  <li><strong>Boilerplate generation</strong> — Obvious time savings on CRUD operations, API endpoints, configs.</li>
+</ol>
+
+<p><strong>Then level up (high impact, higher effort):</strong></p>
+<ol start="4">
+  <li><strong>Test generation</strong> — Significant ROI, requires workflow adjustment.</li>
+  <li><strong>Multi-file refactoring</strong> — Powerful but needs trust in AI. Agent mode shines here.</li>
+  <li><strong>Custom agent workflows</strong> — Transformative for mature teams, needs experimentation.</li>
+</ol>
+
+<!-- Chapter 12 -->
+<h3 class="chapter-title" id="ch12" data-section="ch12">Chapter 12: Driving Adoption and Overcoming Resistance</h3>
+
+<h4>Engineering the "Aha Moment"</h4>
+
+<p>Every developer needs their personal "aha moment" with Cursor. Your job is to create the conditions for it.</p>
+
+<p><strong>Common aha moments:</strong></p>
+<ul>
+  <li><em>"I described a feature in English and Cursor built it across 4 files"</em></li>
+  <li><em>"I asked Cursor to explain a function I'd been confused about for weeks, and it nailed it"</em></li>
+  <li><em>"Cursor wrote tests that actually caught a bug I missed"</em></li>
+  <li><em>"I onboarded to a new codebase in 2 days instead of 2 weeks"</em></li>
+</ul>
+
+<div class="callout callout-tip">
+  <div class="callout-title">How to Engineer These Moments</div>
+  <p>In workshops, have developers bring a <strong>real task</strong> from their current sprint. Don't use toy examples — use their actual codebase. Start with their biggest pain point, not Cursor's coolest feature.</p>
+</div>
+
+<h4>The Objection Playbook</h4>
+
+<div class="table-wrapper">
+<table>
+  <thead><tr><th>What They Say</th><th>What They Mean</th><th>Your Response</th></tr></thead>
+  <tbody>
+    <tr><td>"AI writes bad code"</td><td>"I don't trust it"</td><td>"You're right that AI output needs review — just like any code. The best devs use Cursor as a first draft generator, not autopilot. You're still the expert."</td></tr>
+    <tr><td>"I'm faster without it"</td><td>"I don't want to change"</td><td>"Tab completion alone — zero workflow change — saves 30+ min/day. Would you try just Tab for a week?"</td></tr>
+    <tr><td>"It's a security risk"</td><td>"I don't understand privacy"</td><td>"Let me walk you through Privacy Mode — code never leaves your machine, never stored, never used for training."</td></tr>
+    <tr><td>"It'll replace developers"</td><td>"I'm worried about my job"</td><td>"Every productivity tool has made devs <em>more</em> valuable. Cursor handles tedious parts so you focus on what needs human creativity."</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Chapter 13 -->
+<h3 class="chapter-title" id="ch13" data-section="ch13">Chapter 13: Measuring Success and Proving ROI</h3>
+
+<h4>Leading Indicators (Track Weekly)</h4>
+
+<div class="table-wrapper">
+<table>
+  <thead><tr><th>Metric</th><th>What It Tells You</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Activation rate</strong></td><td>% of licensed users active in the last 7 days</td></tr>
+    <tr><td><strong>Feature adoption</strong></td><td>% using Chat, Agent, and Tab in last 7 days</td></tr>
+    <tr><td><strong>Session frequency</strong></td><td>Average days/week each dev uses Cursor</td></tr>
+    <tr><td><strong>Acceptance rate</strong></td><td>% of AI suggestions developers accept</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>Lagging Indicators (Track Monthly/Quarterly)</h4>
+
+<div class="table-wrapper">
+<table>
+  <thead><tr><th>Metric</th><th>What It Tells You</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Developer velocity</strong></td><td>PRs merged per dev per week (before vs. after)</td></tr>
+    <tr><td><strong>Cycle time</strong></td><td>Average time from first commit to production</td></tr>
+    <tr><td><strong>Developer satisfaction</strong></td><td>Quarterly survey scores</td></tr>
+    <tr><td><strong>Onboarding time</strong></td><td>Time for new hires to first meaningful PR</td></tr>
+    <tr><td><strong>Test coverage</strong></td><td>% of codebase covered by automated tests</td></tr>
+    <tr><td><strong>Retention</strong></td><td>Developer attrition vs. industry benchmarks</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>The Success Dashboard</h4>
+
+<div class="table-wrapper">
+<table>
+  <thead><tr><th>Metric</th><th>Baseline</th><th>Month 1</th><th>Month 3</th><th>Month 6</th><th>Target</th></tr></thead>
+  <tbody>
+    <tr><td>Weekly active users</td><td>0</td><td>60%</td><td>80%</td><td>90%+</td><td>90%+</td></tr>
+    <tr><td>Avg. daily time saved</td><td>0</td><td>30 min</td><td>60 min</td><td>90 min</td><td>60+ min</td></tr>
+    <tr><td>PRs merged/dev/week</td><td>X</td><td>—</td><td>+15%</td><td>+25%</td><td>+20%</td></tr>
+    <tr><td>Developer NPS</td><td>X</td><td>—</td><td>—</td><td>+20 pts</td><td>+15 pts</td></tr>
+    <tr><td>New hire ramp time</td><td>X weeks</td><td>—</td><td>—</td><td>-30%</td><td>-25%</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>The ROI Math (Know This Cold)</h4>
+
+<div class="roi-box">
+  <h5>Enterprise ROI Calculation</h5>
+  <div class="roi-line">100 developers &times; $180K fully-loaded cost = <strong>$18M/year</strong></div>
+  <div class="roi-line">1 hour saved/day per developer = 12.5% productivity gain</div>
+  <div class="roi-line">Recovered productivity = <strong>$2.25M/year</strong></div>
+  <div class="roi-line">Cursor Business: ~$40/user/month = <strong>$48K/year</strong> for 100 devs</div>
+  <div class="roi-result">ROI: ~47x return on investment</div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  PART V — PUTTING IT INTO PRACTICE     -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="ch14" id="part-v">
+  <div class="part-label">Part V</div>
+  <h2>Putting It Into Practice</h2>
+  <p class="part-intro">Theory is important. Experience is what makes you credible.</p>
+</div>
+
+<!-- Chapter 14 -->
+<h3 class="chapter-title" id="ch14" data-section="ch14">Chapter 14: Your Hands-On Learning Plan</h3>
+
+<p>You don't need to become a developer. You need to <strong>experience what developers experience</strong> so you can speak from lived understanding, not slide decks.</p>
+
+<h4>Week 1: Foundations &amp; First Contact</h4>
+
+<h5>Days 1–2: Setup &amp; Orientation</h5>
+<ul>
+  <li>Install Cursor and explore the interface (sidebar, terminal, file explorer)</li>
+  <li>Open the Command Palette (Cmd+Shift+P) and browse available commands</li>
+  <li>Create a <code>learning-projects</code> folder and write your first Python file</li>
+  <li>Open Cursor Chat (Cmd+L) and have a conversation about what an IDE is</li>
+  <li><em>Reflection: Write 3 sentences about what surprised you</em></li>
+</ul>
+
+<h5>Days 3–4: Tab Completion &amp; Chat</h5>
+<ul>
+  <li>Create a file and watch Tab completion suggest code from just a comment</li>
+  <li>Build a simple calculator by writing a comment and letting Cursor generate the code</li>
+  <li>Use Chat to explain the code, then ask it to add error handling</li>
+</ul>
+
+<div class="callout callout-insight">
+  <div class="callout-title">Key Learning</div>
+  <p>Notice the difference between Tab (passive, autocomplete) and Chat (active, conversational). Both are valuable in different contexts.</p>
+</div>
+
+<h5>Day 5: Cmd+K (Inline Editing)</h5>
+<ul>
+  <li>Select code, press Cmd+K, and describe changes in plain English</li>
+  <li>Build a to-do list program using <em>only</em> Cmd+K instructions</li>
+</ul>
+
+<h5>Days 6–7: Agent Mode</h5>
+<ul>
+  <li>Use Agent mode to build a multi-file expense tracker from a single English description</li>
+  <li>Watch it create files, write code, and iterate</li>
+  <li>Ask Agent to add a new feature and observe it modify existing files</li>
+</ul>
+
+<h4>Week 2: Deepening Understanding</h4>
+
+<h5>Days 8–9: Context &amp; @-Mentions</h5>
+<ul>
+  <li>Use <code>@codebase</code>, <code>@file</code>, and <code>@web</code> to pull specific context</li>
+  <li>Create <code>.cursor/rules/</code> and see how rules shape AI output</li>
+</ul>
+
+<h5>Days 10–11: Simulating Enterprise Use Cases</h5>
+<ul>
+  <li>Clone an open-source project and pretend you're a new developer onboarding</li>
+  <li>Generate tests for existing code and try running them</li>
+  <li>Generate documentation using Cmd+K</li>
+</ul>
+
+<h5>Days 12–14: Building Intuition</h5>
+<ul>
+  <li>Day 12: Build a quiz game with Agent</li>
+  <li>Day 13: Build a simple web page</li>
+  <li>Day 14: Build a data analysis script</li>
+  <li>After each: What worked? Where did AI struggle? What prompts got the best results?</li>
+</ul>
+
+<h4>Week 3: Interview Readiness</h4>
+
+<h5>Days 15–16: Prompt Engineering</h5>
+<ul>
+  <li>Take the same task and try 5 different prompts (vague → highly specific)</li>
+  <li>Document how output quality changes with prompt quality</li>
+</ul>
+
+<h5>Days 17–18: Simulating Conversations</h5>
+<ul>
+  <li>Use Chat to role-play: ask it to be a skeptical engineer, then a CTO</li>
+  <li>Practice your pitch and responses to objections</li>
+</ul>
+
+<h5>Days 19–21: Capstone Projects</h5>
+<ul>
+  <li>Build a demo web application with Agent, documenting your process</li>
+  <li>Write a rollout proposal for a hypothetical 500-person org</li>
+  <li>Record a 5-minute screen recording of yourself using Cursor</li>
+</ul>
+
+<!-- Chapter 15 -->
+<h3 class="chapter-title" id="ch15" data-section="ch15">Chapter 15: Interview Preparation</h3>
+
+<h4>Product Understanding</h4>
+
+<h5>"How would you explain Cursor to a non-technical executive?"</h5>
+<blockquote>
+  <p>"Cursor is an AI-powered development environment that makes software engineers significantly more productive. If traditional coding is writing a document from scratch, Cursor is like having an expert collaborator who's read your entire codebase and can draft, edit, and review alongside you — but you're always in control. Enterprises typically see 20–30% productivity improvements per developer."</p>
+</blockquote>
+
+<h5>"What makes Cursor different from GitHub Copilot?"</h5>
+<blockquote>
+  <p>"The core difference is architectural. Copilot is a plugin bolted onto VS Code — great at autocomplete, but limited by what a plugin can access. Cursor rebuilt the entire editor around AI: multi-file Agent workflows, deeply context-aware suggestions, and team-level Rules. It's the difference between adding a turbo to an existing engine versus designing one from the ground up."</p>
+</blockquote>
+
+<h5>"Where does Cursor fail?"</h5>
+<blockquote>
+  <p>"Cursor struggles with highly novel proprietary systems, security-critical code where human expertise is non-negotiable, and large-scale architecture decisions too broad for the context window. The key message: it's a power tool, not autopilot — it amplifies expertise, doesn't replace judgment."</p>
+</blockquote>
+
+<h4>Deployment &amp; Strategy</h4>
+
+<h5>"How would you roll out Cursor at a 1,000-person org?"</h5>
+<blockquote>
+  <p>Use the four-phase playbook: discovery, pilot 20–30 developers, measure relentlessly, build champions, expand in waves. Always lead with developers' pain points rather than pushing features.</p>
+</blockquote>
+
+<h5>"A CTO says their devs tried Copilot and weren't impressed."</h5>
+<blockquote>
+  <p>"That's a great starting point — your team is open to AI and has high standards. Copilot fatigue usually comes from it being limited to autocomplete. I'd set up a 45-minute working session with 3–4 developers using their actual codebase. Agent mode and codebase Q&amp;A produce a very different reaction."</p>
+</blockquote>
+
+<h4>The Non-Technical Background Question</h4>
+
+<h5>"You don't have an engineering background. How would you be credible with CTOs?"</h5>
+<blockquote>
+  <p>"I'm not an engineer and I won't pretend to be. But I've invested deeply in understanding how developers work, what pain points they face, and how AI tools fit into real workflows. What I bring is the ability to translate between business objectives and technical outcomes, structure rollout programs that drive adoption, and speak to ROI in terms both CTOs and CFOs understand. The best deployment leaders aren't the most technical — they're the ones who listen deeply and connect the dots others miss."</p>
+</blockquote>
+
+<h4>Handling Technical Questions You Don't Know</h4>
+
+<div class="callout callout-tip">
+  <div class="callout-title">Framework: The Honest Expert</div>
+  <ol>
+    <li><strong>Acknowledge honestly:</strong> "Great question. Let me share what I know and flag where I'd confirm with the team."</li>
+    <li><strong>Share what you DO know:</strong> Demonstrate contextual understanding.</li>
+    <li><strong>Bridge to value:</strong> Connect back to what matters to them.</li>
+    <li><strong>Commit to follow-up:</strong> "I'll get you a definitive answer by tomorrow."</li>
+  </ol>
+</div>
+
+<!-- Chapter 16 -->
+<h3 class="chapter-title" id="ch16" data-section="ch16">Chapter 16: Case Studies</h3>
+
+<h4>Case Study 1: FinTech Company</h4>
+<p><strong>Scenario:</strong> 300-person fintech (150 engineers), Java and Python. Strict security (SOC 2, US data residency). CTO interested, CISO skeptical. Currently on IntelliJ.</p>
+<p><strong>Your approach should address:</strong></p>
+<ul>
+  <li>Security: Privacy Mode, SOC 2, data residency</li>
+  <li>IntelliJ switching cost (Cursor is VS Code-based — real barrier for Java teams)</li>
+  <li>Pilot design: which team, which language, what metrics</li>
+  <li>ROI quantification for the CFO</li>
+</ul>
+
+<h4>Case Study 2: E-Commerce Platform</h4>
+<p><strong>Scenario:</strong> 500 engineers across 40 teams. React/Node.js/Python. Copilot deployed at 30% adoption. Leadership wants alternatives.</p>
+<p><strong>Your approach should address:</strong></p>
+<ul>
+  <li>Why Copilot adoption is low (discovery questions)</li>
+  <li>Framing Cursor as an upgrade, not replacement</li>
+  <li>Reaching the 70% not using <em>any</em> AI tool</li>
+  <li>Quick wins beyond autocomplete (Agent, codebase Q&amp;A)</li>
+</ul>
+
+<h4>Case Study 3: Healthcare SaaS</h4>
+<p><strong>Scenario:</strong> 80 engineers. HIPAA mandatory. VP of Engineering is a champion, but engineers are skeptical after an AI tool introduced a security vulnerability.</p>
+<p><strong>Your approach should address:</strong></p>
+<ul>
+  <li>Directly addressing the past security incident</li>
+  <li>HIPAA specifics (Privacy Mode, data handling)</li>
+  <li>Building trust with skeptical engineers (start small, prove it)</li>
+  <li>Leveraging the VP as an internal champion</li>
+</ul>
+
+<hr>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  APPENDIX                               -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="mental-models" id="appendix">
+  <div class="part-label">Appendix</div>
+  <h2>Reference Materials</h2>
+</div>
+
+<!-- Mental Models -->
+<h3 class="chapter-title" id="mental-models" data-section="mental-models">Mental Models That Stick</h3>
+
+<h5>1. The 10x Team Reality</h5>
+<p>Individual "10x developers" are rare. What exists: <strong>10x teams</strong> — teams with great tools, clear processes, and low friction. Cursor is a team multiplier.</p>
+
+<h5>2. Developer Experience = UX for Engineers</h5>
+<p>Developers are "users" of internal tools. If a tool is slow or confusing, they'll abandon it — just like a consumer abandons a bad app.</p>
+
+<h5>3. The Toil Tax</h5>
+<p>Every org has "toil" — repetitive, automatable work that eats developer time. The more toil a team has, the more valuable Cursor becomes.</p>
+
+<h5>4. The Trust Gradient</h5>
+
+<div class="img-block">
+  <img src="images/trust-gradient.png" alt="Trust Gradient for AI Tool Adoption">
+  <div class="caption">Always start at Level 1 and let developers move up naturally.</div>
+</div>
+
+<ul>
+  <li><strong>Level 1:</strong> "Show me suggestions" (Tab) — lowest trust</li>
+  <li><strong>Level 2:</strong> "Explain things" (Chat) — moderate trust</li>
+  <li><strong>Level 3:</strong> "Make changes for me" (Cmd+K) — higher trust</li>
+  <li><strong>Level 4:</strong> "Do tasks autonomously" (Agent) — highest trust</li>
+</ul>
+
+<h5>5. The Compound Effect</h5>
+<p>5 min saved &times; 20 times/day &times; 250 working days = <strong>416 hours/year</strong> per developer. That's 10+ weeks. Small savings compound dramatically.</p>
+
+<h5>6. Land and Expand</h5>
+<p>Land a small pilot, prove value, expand. Never boil the ocean on day one.</p>
+
+<h5>7. Inside-Out Adoption</h5>
+<p>Sustainable adoption isn't top-down or bottom-up — it's inside-out. Start with enthusiasts, give them proof points, let them pull others in.</p>
+
+<!-- Glossary -->
+<h3 class="chapter-title" id="glossary" data-section="glossary">Glossary of Essential Terms</h3>
+
+<h4>Development &amp; Workflow</h4>
+<div class="table-wrapper">
+<table>
+  <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+  <tbody>
+    <tr><td><strong>IDE</strong></td><td>Integrated Development Environment — the app developers write code in</td></tr>
+    <tr><td><strong>Git</strong></td><td>Version control system — tracks all code changes, enables collaboration</td></tr>
+    <tr><td><strong>Repository</strong></td><td>A project's complete codebase, stored in Git</td></tr>
+    <tr><td><strong>Branch</strong></td><td>A parallel copy of code for making changes without affecting main</td></tr>
+    <tr><td><strong>Pull Request</strong></td><td>A proposal to merge changes, reviewed by teammates</td></tr>
+    <tr><td><strong>Commit</strong></td><td>A saved checkpoint of code changes with a description</td></tr>
+    <tr><td><strong>Deploy</strong></td><td>Push code to a live environment where users can access it</td></tr>
+    <tr><td><strong>CI/CD</strong></td><td>Continuous Integration/Deployment — automated test and deploy systems</td></tr>
+    <tr><td><strong>Sprint</strong></td><td>A 1–4 week Agile work cycle (usually 2 weeks)</td></tr>
+    <tr><td><strong>Technical Debt</strong></td><td>Shortcuts that save time now but create problems later</td></tr>
+    <tr><td><strong>Refactoring</strong></td><td>Improving code structure without changing what it does</td></tr>
+    <tr><td><strong>Boilerplate</strong></td><td>Repetitive, standard code that follows a predictable pattern</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>Architecture &amp; Infrastructure</h4>
+<div class="table-wrapper">
+<table>
+  <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+  <tbody>
+    <tr><td><strong>API</strong></td><td>Application Programming Interface — a structured way for systems to communicate</td></tr>
+    <tr><td><strong>REST API</strong></td><td>Most common API type, using HTTP requests (GET, POST, PUT, DELETE)</td></tr>
+    <tr><td><strong>Frontend</strong></td><td>The part of software users see and interact with</td></tr>
+    <tr><td><strong>Backend</strong></td><td>Server-side logic, databases, and systems behind the scenes</td></tr>
+    <tr><td><strong>Microservices</strong></td><td>Architecture where an app is split into small, independent services</td></tr>
+    <tr><td><strong>Monolith</strong></td><td>Architecture where the entire app is one single codebase</td></tr>
+    <tr><td><strong>Docker</strong></td><td>Bundles code with dependencies so it runs the same everywhere</td></tr>
+    <tr><td><strong>Kubernetes</strong></td><td>System for managing many containers at scale</td></tr>
+    <tr><td><strong>Cloud</strong></td><td>Remote computing from Amazon (AWS), Google (GCP), or Microsoft (Azure)</td></tr>
+    <tr><td><strong>Framework</strong></td><td>Pre-built structure for building apps (React, Django, Spring)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>AI &amp; Machine Learning</h4>
+<div class="table-wrapper">
+<table>
+  <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+  <tbody>
+    <tr><td><strong>LLM</strong></td><td>Large Language Model — AI trained on text data (GPT-4, Claude, etc.)</td></tr>
+    <tr><td><strong>Context Window</strong></td><td>How much text an LLM can process at once</td></tr>
+    <tr><td><strong>Token</strong></td><td>The unit LLMs process (~0.75 words per token)</td></tr>
+    <tr><td><strong>RAG</strong></td><td>Retrieval-Augmented Generation — fetching relevant info before generating</td></tr>
+    <tr><td><strong>Prompt Engineering</strong></td><td>Crafting effective instructions for AI</td></tr>
+    <tr><td><strong>Hallucination</strong></td><td>When AI generates confident but incorrect information</td></tr>
+    <tr><td><strong>Fine-tuning</strong></td><td>Further training an AI model on specific data</td></tr>
+    <tr><td><strong>Latency</strong></td><td>Time delay between request and response</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>Business &amp; Compliance</h4>
+<div class="table-wrapper">
+<table>
+  <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+  <tbody>
+    <tr><td><strong>SOC 2</strong></td><td>Security compliance standard for cloud services</td></tr>
+    <tr><td><strong>SSO</strong></td><td>Single Sign-On — one login for multiple systems</td></tr>
+    <tr><td><strong>HIPAA</strong></td><td>Healthcare data privacy regulation</td></tr>
+    <tr><td><strong>NPS</strong></td><td>Net Promoter Score — user satisfaction metric</td></tr>
+    <tr><td><strong>ARR</strong></td><td>Annual Recurring Revenue — subscription business metric</td></tr>
+    <tr><td><strong>Churn</strong></td><td>Rate at which users stop using a product</td></tr>
+    <tr><td><strong>TAM</strong></td><td>Total Addressable Market — the full revenue opportunity</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Cheat Sheet -->
+<h3 class="chapter-title" id="cheat-sheet" data-section="cheat-sheet">The One-Page Cheat Sheet</h3>
+
+<h4>About the Product</h4>
+<blockquote>
+  <p>Cursor isn't just autocomplete — it's an AI-native development environment that understands your entire codebase and can act autonomously. The differentiator: context awareness, Agent mode, and team-level configuration no plugin can match.</p>
+</blockquote>
+
+<h4>About Developers</h4>
+<blockquote>
+  <p>Developers are craftspeople who take pride in their work. They're skeptical of tools that overpromise and adopt tools that genuinely save time. Respect their expertise, lead with pain points, let results speak louder than marketing.</p>
+</blockquote>
+
+<h4>About Enterprise Deployment</h4>
+<blockquote>
+  <p>Adoption is a change management problem, not a technical one. Start small with champions, prove value with data, expand through peer influence. Security and privacy are table stakes.</p>
+</blockquote>
+
+<h4>About Your Role</h4>
+<blockquote>
+  <p>You are the bridge. Not the smartest technical person — the best listener, clearest communicator, and most structured thinker. You connect developer pain to product capabilities to business outcomes to customer success.</p>
+</blockquote>
+
+<div class="formula-box">
+  <div class="formula" style="font-size: 16px; line-height: 1.5;">"I help engineering teams get dramatically more productive with AI, by understanding their workflows deeply and guiding adoption strategically."</div>
+</div>
+
+<h4>Daily Preparation Checklist</h4>
+<ul>
+  <li>Spend 30–60 minutes using Cursor (build something, explore a feature)</li>
+  <li>Read one article about developer productivity or AI coding tools</li>
+  <li>Practice explaining one technical concept in plain English</li>
+  <li>Review one chapter of this guide</li>
+  <li>Practice answering one interview question out loud</li>
+</ul>
+
+<hr>
+
+<p style="text-align: center; color: var(--text-light); font-size: 14px; padding: 20px 0;">
+  Last updated March 23, 2026 &middot; You've got this, Richard.
+</p>
+
+</div><!-- .content -->
+</div><!-- .main -->
+
+<button class="back-to-top" aria-label="Back to top">&uarr;</button>
+
+<script src="script.js"></script>
+</body>
+</html>
