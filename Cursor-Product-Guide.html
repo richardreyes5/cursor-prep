@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cursor Product Guide</title>
+    <link rel="stylesheet" href="./cursor-guide-style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.8.1/github-markdown.min.css"
+    />
+  </head>
+  <body>
+    <main class="page">
+      <article id="content" class="markdown-body"></article>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+      async function renderGuide() {
+        const target = document.getElementById("content");
+        try {
+          const response = await fetch("./Cursor-Product-Guide.md", { cache: "no-store" });
+          if (!response.ok) {
+            throw new Error("Could not load Cursor-Product-Guide.md");
+          }
+
+          const markdown = await response.text();
+          marked.setOptions({
+            gfm: true,
+            breaks: false,
+            headerIds: true,
+            mangle: false,
+          });
+
+          target.innerHTML = marked.parse(markdown);
+          document.title = "Cursor Product Guide";
+        } catch (error) {
+          target.innerHTML = `
+            <h1>Unable to render guide</h1>
+            <p>${error.message}</p>
+            <p>Make sure <code>Cursor-Product-Guide.md</code> is in the same folder as this HTML file.</p>
+          `;
+        }
+      }
+
+      renderGuide();
+    </script>
+  </body>
+</html>
