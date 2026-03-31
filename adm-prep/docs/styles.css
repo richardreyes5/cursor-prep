@@ -218,6 +218,28 @@ body {
   margin-bottom: 48px;
 }
 
+.hero .site-links {
+  font-size: 14px;
+  margin: 0 0 20px;
+  line-height: 1.6;
+}
+
+.hero .site-links a {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.hero .site-links a:hover {
+  text-decoration: underline;
+}
+
+.hero .site-links-sep {
+  color: #94a3b8;
+  margin: 0 8px;
+  user-select: none;
+}
+
 .hero h1 {
   font-family: 'Playfair Display', serif;
   font-size: 40px;
