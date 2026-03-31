@@ -553,7 +553,256 @@ The reframe: "The ADM for a technically sophisticated org isn't a teacher — th
 
 ---
 
-## Section 7: How to Practice These
+## Section 7: Engineering Realities — When AI Tools Meet Production
+
+These are the questions that live at the intersection of AI-assisted development and the messy reality of shipping software. They simulate real incidents, debugging sessions, and engineering trade-offs that surface *after* teams adopt Cursor — the kinds of problems a credible ADM needs to understand, diagnose, and discuss fluently with engineering teams. These aren't theoretical — they're the conversations that happen in post-incident reviews, sprint retros, and 1:1s with frustrated tech leads.
+
+---
+
+**Q29: "Since we started using Agent mode heavily, our application performance has degraded. Logs show slower response times across several endpoints. Bugbot isn't flagging anything. What could be going on?"**
+
+*What makes this hard:* The team is attributing performance issues to AI-generated code, but the connection isn't obvious — Bugbot says the code looks fine. You need to understand why syntactically correct code can still be slow.
+
+*Approach:* Performance issues from AI-generated code that passes review usually fall into a few categories:
+
+1. **Inefficient query patterns** — AI often generates code that works correctly but isn't optimized. A classic example: Agent mode writes a loop that makes a separate database query for each item instead of a single batch query. This is called the **N+1 query problem**. The code is functionally correct, reviews fine, and passes tests — but under production load with thousands of records, it's orders of magnitude slower. Bugbot catches bugs, not performance anti-patterns.
+
+2. **Missing caching or redundant computation** — AI-generated code tends to be "correct but naive." It might re-fetch data that a human developer would know to cache, or recompute values on every request that should be memoized. The AI doesn't know your application's performance profile — it solves for correctness, not efficiency.
+
+3. **Suboptimal data structures or algorithms** — The AI might use a linear search where a hash lookup would be appropriate, or build a list where a set would be more performant. At small scale (unit tests), the difference is invisible. At production scale, it compounds.
+
+4. **Accumulated micro-inefficiencies** — No single AI-generated function is slow, but across dozens of Agent-generated features, small inefficiencies compound. Each endpoint adds an extra 50ms of unnecessary work — individually trivial, collectively meaningful.
+
+*What to recommend:*
+- Add performance-oriented Cursor Rules: "Always use batch database queries instead of loops. Prefer indexed lookups. Include time complexity considerations for any function that processes collections."
+- Integrate performance profiling into the CI pipeline (e.g., load testing on staging) so degradation is caught before production.
+- Have the team run an APM tool (Application Performance Monitoring — like Datadog or New Relic) to pinpoint which specific endpoints degraded and trace back to the PRs that introduced the changes.
+- Frame it for the team: "Bugbot catches correctness issues. Performance requires a different layer of validation — the same way you wouldn't expect a code linter to catch a slow database query."
+
+---
+
+**Q30: "A customer is seeing bugs in production that we can't reproduce in staging. Bugbot passed, code review passed, all tests pass. What's going wrong?"**
+
+*What makes this hard:* Everything in the quality pipeline says "green," but production is broken. This is the kind of problem that makes engineering teams lose faith in AI-assisted development.
+
+*Approach:* When all automated checks pass but production breaks, the issue is almost always in the **gap between what the tests cover and what production actually does**. AI-generated tests are a common culprit — not because they're wrong, but because they're *shallow*.
+
+1. **Happy-path-only tests** — When Cursor generates tests, it tends to test the expected behavior: "given valid input, return the correct output." It's less likely to generate edge-case tests: "What happens with null input? An empty string? A 10MB payload? A request that arrives during a database failover?" These edge cases are where production bugs live.
+
+2. **Mocked dependencies that mask reality** — AI-generated tests often mock external services (databases, APIs, caches) to keep tests fast and isolated. But the mocks may not accurately represent how those services behave under real conditions. Example: the mock returns instantly, but the real database has a 200ms latency that causes a timeout the code doesn't handle. The test passes; production fails.
+
+3. **Missing integration and end-to-end tests** — AI tools are excellent at generating unit tests (testing individual functions in isolation) but less reliable at generating integration tests (testing how components interact) or end-to-end tests (testing the full user workflow). Production bugs often live in the seams between components — exactly where unit tests don't reach.
+
+4. **Data shape mismatches** — Tests use clean, well-structured sample data. Production data is messy: fields that are unexpectedly null, strings with special characters, timestamps in wrong time zones, records with legacy formatting. AI-generated tests don't know what your production data actually looks like.
+
+5. **Concurrency and timing issues** — Tests typically run sequentially and deterministically. Production has concurrent users, race conditions, and variable network latency. AI-generated code might not handle concurrent access to shared resources correctly — and unit tests won't catch it because they run one at a time.
+
+*What to recommend:*
+- Add Cursor Rules that instruct test generation to include edge cases: "Every test file must include tests for null inputs, empty collections, maximum-size payloads, and error conditions. Include at least one integration test per feature."
+- Introduce contract testing or snapshot testing for API boundaries where mocks tend to drift from reality.
+- Run chaos engineering or fault-injection tests in staging to simulate real failure modes.
+- Have senior engineers review AI-generated test files with the same rigor as production code — the tests themselves need code review.
+- Frame it: "AI-generated tests increase coverage quantity. The team still needs to ensure coverage *quality* — testing the failure modes that only experience teaches you to anticipate."
+
+---
+
+**Q31: "Our tech lead noticed that AI-generated code is slowly diverging from our architecture. Each feature works individually, but the overall codebase is becoming inconsistent — different patterns for the same problems in different services. How do we fix this?"**
+
+*What makes this hard:* This is **architectural drift** — one of the most insidious risks of AI-assisted development. It's not a bug; it's entropy. And it's hard to detect because each individual PR looks fine.
+
+*Approach:* AI generates code that solves the immediate problem but doesn't have a holistic view of the codebase's architectural intent. Without strong guardrails, different developers using AI on different features will end up with different implementations of the same pattern.
+
+Why it happens:
+- **Agent mode optimizes for the task, not the system.** If you ask it to build a new API endpoint, it will build a working endpoint — but it might use a different error-handling pattern than the one three other endpoints use, because those endpoints weren't in its immediate context window.
+- **Different developers provide different context.** Developer A might reference `services/auth` as a model; Developer B might reference `services/billing`. Both produce working code, but with divergent patterns.
+- **Lack of canonical examples.** Without explicit Rules pointing to "this is the pattern to follow," the AI draws from its training data, which contains thousands of valid approaches to the same problem.
+
+*What to recommend:*
+- **Create pattern-specific Rules** — Not just "follow our coding standards," but "When creating a new API endpoint, follow the exact pattern in `services/_template/endpoint.go`. When adding error handling, use the pattern in `lib/errors/handler.go`." The more specific the Rule, the more consistent the output.
+- **Architectural decision records (ADRs)** — If the team documents key architectural decisions in Markdown files (a common practice), reference them in Rules via `@docs`. This gives the AI access to the *why* behind patterns, not just the *what*.
+- **Periodic architecture reviews** — Schedule a quarterly "architecture consistency audit" where tech leads review AI-generated code across services specifically looking for drift. This is different from feature code review — it's a cross-cutting concern.
+- **Template services** — Maintain a "golden" template service that demonstrates the canonical patterns. Reference it in Rules. When starting a new service, use Agent mode with the template as explicit context.
+
+---
+
+**Q32: "A developer used Agent mode to refactor our authentication middleware. It passes all tests, but our security team found it changed the order of middleware execution — now rate limiting runs after auth instead of before. How do we prevent this?"**
+
+*What makes this hard:* This is a **semantic correctness** issue — the code is syntactically valid, tests pass, but the *behavior* changed in a way that creates a security vulnerability. This is one of the hardest categories of AI-generated bugs to catch.
+
+*Approach:* Middleware ordering, state machine transitions, and execution sequences are examples of **implicit contracts** — things that aren't enforced by the type system or captured by typical unit tests, but that are critical to correctness.
+
+Why the AI got it wrong:
+- **Agent mode optimizes for the refactoring goal**, not for preserving execution order. It restructured the code to be "cleaner" and inadvertently reordered the middleware chain. The tests pass because they test each middleware in isolation, not the order they execute in.
+- **Implicit contracts aren't in the code.** Unless the middleware order is documented or enforced programmatically, there's no way for the AI to know it matters.
+
+*What to recommend:*
+- **Make implicit contracts explicit.** Create a Cursor Rule: "The middleware chain in `server.go` MUST execute in this order: rate limiting → authentication → authorization → request handling. Never reorder middleware without security team approval." This turns institutional knowledge into an AI-visible instruction.
+- **Add integration tests for ordering.** Write tests that specifically validate middleware execution order — not just that each middleware works, but that they execute in the correct sequence. Example: a test that sends an unauthenticated request and verifies rate limiting was applied *before* the auth check.
+- **Use Plan Mode for sensitive refactors.** Before Agent mode executes a refactor on security-critical code, require Plan Mode review. The developer reads the proposed approach and catches ordering changes before they happen.
+- **Designate "AI-restricted zones."** Some code areas — authentication, authorization, payment processing, encryption — should have Rules that instruct the AI: "Do not modify files in `middleware/auth/` or `middleware/security/` without explicit user confirmation at each step."
+
+---
+
+**Q33: "Our CI pipeline has gotten 40% slower since teams started using Cursor to generate tests. The test suite went from 2,000 tests to 8,000 in three months. Is more tests always better?"**
+
+*What makes this hard:* More test coverage sounds universally good. But the engineering reality is that test suite bloat has real costs — slower CI, slower feedback loops, more maintenance burden.
+
+*Approach:* AI tools make it so easy to generate tests that teams often end up with a quantity-over-quality problem:
+
+1. **Redundant tests** — The AI might generate 5 tests that all exercise the same code path with slightly different inputs. Each test adds CI time, but only the first one provides meaningful coverage signal.
+
+2. **Trivial tests** — Tests that validate obvious behavior (e.g., testing that a getter returns the value that was set) add to the count but not to confidence. They pass when things work and don't fail when things break.
+
+3. **Slow, poorly isolated tests** — AI-generated tests might spin up real database connections, make network calls, or read from the filesystem when mocks would suffice. Each test runs in 500ms instead of 5ms — multiply by thousands and the pipeline bogs down.
+
+4. **Missing test categorization** — Without a strategy, all tests run in the same pipeline stage. Fast unit tests wait behind slow integration tests. There's no tiering (fast/slow, unit/integration/e2e).
+
+*What to recommend:*
+- **Add Rules for test quality:** "Prefer focused unit tests over broad integration tests. Mock external dependencies unless the test specifically validates integration behavior. Each test should cover a distinct behavior — do not duplicate coverage."
+- **Implement test tiering in CI:** Split the pipeline into fast unit tests (run on every commit), integration tests (run on PR), and e2e tests (run nightly or on merge to main). This keeps feedback loops fast.
+- **Run coverage analysis with branch/condition coverage** — Not just "how many lines are covered" but "how many decision branches are tested." This reveals whether 8,000 tests actually cover more scenarios than 2,000 well-written ones did.
+- **Periodic test audits** — Have engineers review the AI-generated test suite for redundancy and remove tests that don't add signal. Treat the test suite like production code — it needs maintenance.
+
+---
+
+**Q34: "A junior developer used Agent mode to build an entire feature. It works great locally. But when deployed, it's causing memory leaks that crash the pod every 4 hours. All tests pass. What happened?"**
+
+*What makes this hard:* Memory leaks are among the hardest bugs to detect in code review or testing. They're invisible in short-lived test runs and only manifest under sustained production load.
+
+*Approach:* AI-generated code that causes memory leaks typically has one of these patterns:
+
+1. **Event listeners or subscriptions that are never cleaned up.** Agent mode might add a WebSocket listener, a pub/sub subscription, or a timer interval in a function that gets called repeatedly — but never adds the corresponding cleanup/teardown logic. Each call adds a new listener; none are released. Memory grows until the process crashes.
+
+2. **Caching without eviction.** The AI might implement an in-memory cache for performance (a reasonable pattern) but without setting a maximum size or TTL (time to live). Over hours of production use, the cache grows unboundedly.
+
+3. **Closure-captured references.** In JavaScript/TypeScript, closures can accidentally hold references to large objects, preventing garbage collection. AI-generated callbacks and higher-order functions sometimes capture more scope than necessary.
+
+4. **Database connection pool exhaustion.** Agent mode might open a new database connection per request without properly releasing it back to the pool, or create a new pool instance inside a function that should reuse a shared pool.
+
+*Why tests don't catch it:*
+- Unit tests run in milliseconds — no time for memory to accumulate.
+- Integration tests typically spin up a fresh environment for each test run — no long-lived process to leak in.
+- The leak only manifests under sustained load over hours — exactly the conditions that testing environments don't replicate.
+
+*What to recommend:*
+- Add Cursor Rules for resource management: "Every event listener, subscription, or interval must have a corresponding cleanup function. Database connections must be released in a `finally` block. In-memory caches must have a maximum size and TTL."
+- Integrate memory profiling into staging environments — run the service under sustained simulated load for hours and monitor memory trends.
+- For Node.js/Python services, use heap snapshot tools during load testing to identify objects that grow but never shrink.
+- Senior review requirement for Agent-generated features that involve I/O, event handling, or resource allocation.
+
+---
+
+**Q35: "Our API team used Cursor to rapidly build 15 new endpoints. They shipped fast, but now consumers are reporting inconsistent response formats — some endpoints return errors as `{ error: "message" }`, others as `{ errors: [{ code: 123, detail: "message" }] }`. How do we fix this and prevent it?"**
+
+*What makes this hard:* **API contract inconsistency** is a classic AI-generation problem. Each endpoint was built independently, and without a shared schema contract, the AI generated different (but individually valid) response structures.
+
+*Approach:* Why it happened:
+- Each developer (or each Agent session) generated endpoints at different times, possibly referencing different existing endpoints as context. The AI picked up whatever pattern was in its immediate context window.
+- There was likely no enforced API response schema — no OpenAPI spec, no shared response envelope, no contract validation in CI.
+
+*What to recommend:*
+- **Create an OpenAPI/Swagger specification** for the API. Reference it in Cursor Rules: "All API responses MUST conform to the schema in `docs/api-spec.yaml`. Error responses use the format defined in `lib/api/errors.ts`."
+- **Add contract tests** — Tests that validate response shapes against the spec. These catch format drift at the PR level, not in production.
+- **Shared response utilities** — Create helper functions like `sendSuccess(data)` and `sendError(code, message)` that enforce the standard format. Add a Rule: "Always use the response helpers from `lib/api/response.ts`. Never construct response objects manually."
+- **API linting in CI** — Tools like Spectral can lint API responses against an OpenAPI spec and block PRs that introduce non-compliant endpoints.
+
+---
+
+**Q36: "After adopting Cursor, our team ships PRs 30% faster. But our rollback rate has also increased — we're reverting more deployments than before. What's going on?"**
+
+*What makes this hard:* Faster shipping *and* more rollbacks means the team is moving faster but with less confidence. The quality-speed trade-off has shifted in a way that's creating operational pain.
+
+*Approach:* This pattern typically indicates that AI tools accelerated code *production* but the team's quality gates didn't scale proportionally:
+
+1. **Code review became a rubber stamp.** When PRs arrive faster and look well-structured (because AI generates clean-looking code), reviewers may spend less time scrutinizing them. Review fatigue sets in — "the AI wrote it, it looks fine, approve." Subtle issues that a slower, more deliberate review would catch slip through.
+
+2. **Test coverage increased in quantity but not in depth.** More tests pass, which creates a false sense of confidence. But the tests don't cover the failure modes that cause production rollbacks (edge cases, integration failures, data anomalies).
+
+3. **Staging/QA was skipped or shortened.** When code ships faster, there's organizational pressure to deploy faster too. If staging validation or manual QA was part of the release process, it may have been compressed or dropped because "everything passes CI."
+
+4. **Complexity increased without proportional understanding.** Developers shipping Agent-generated features may not fully understand all the code in their PR. When something breaks in production, they're slower to debug because they didn't write it line by line.
+
+*What to recommend:*
+- **Restore review rigor.** Not slower reviews, but *different* ones. Add a code review checklist item: "I understand every line of this PR and can explain the failure modes." If the developer can't, the PR isn't ready.
+- **Track rollback-to-PR ratio** as a metric alongside velocity. If it's trending up, it signals a quality gap — even if velocity metrics look great.
+- **Implement progressive rollouts** — canary deployments, feature flags, gradual rollout percentages — so that issues are caught with 1% of traffic instead of 100%.
+- **Post-rollback retros** — For each rollback, trace back to root cause: was it a test gap, a review miss, or a production-only condition? Aggregate these to find the systemic pattern.
+
+---
+
+**Q37: "A developer says Cursor's suggestions keep pulling in a deprecated internal library. We migrated away from it 6 months ago, but it still exists in the codebase. The AI keeps suggesting import paths to the old one. How do we stop this?"**
+
+*What makes this hard:* This is a **stale context** problem — the codebase index includes deprecated code that the AI treats as valid, current patterns.
+
+*Approach:* The AI doesn't know a library is deprecated unless you tell it. It sees the deprecated library in the codebase, sees it imported in existing files, and concludes it's a valid pattern.
+
+*What to recommend:*
+- **Cursor Rules are the first fix:** "The library `@internal/old-utils` is deprecated. Never import from it. Always use `@internal/new-utils` instead. See migration guide at `docs/migration/utils-v2.md`."
+- **Add deprecation markers in code:** If the old library has a package.json or module-level comment marked `@deprecated`, some models will recognize this signal. But don't rely on it — the Rule is the reliable fix.
+- **Gitignore or exclude from indexing:** If the deprecated library is only kept for backward compatibility and isn't actively used, consider excluding its directory from Cursor's codebase index (via `.cursorignore`) so the AI never sees it as context.
+- **Finish the migration:** The most permanent fix is removing the deprecated code entirely. If it's still in the codebase, someone will reference it — human or AI. Use Agent mode to help complete the migration: "Find all remaining imports of `@internal/old-utils` and migrate them to `@internal/new-utils` following the pattern in `docs/migration/utils-v2.md`."
+
+---
+
+**Q38: "We added Cursor to our data pipeline team. The AI-generated SQL queries work correctly in dev but cause table locks and timeouts in production because our production database has 500 million rows. How should we think about this?"**
+
+*What makes this hard:* SQL that works on small datasets but fails at scale is one of the most common production issues in software engineering — and it's amplified by AI tools that test against small dev databases.
+
+*Approach:* AI generates SQL that is *logically correct* but not *operationally safe* at scale:
+
+1. **Missing indexes** — The AI might write a `WHERE` clause on a non-indexed column. On 1,000 rows in dev, it runs in milliseconds. On 500 million rows in production, it triggers a full table scan that takes minutes and locks the table.
+
+2. **Unbounded queries** — `SELECT * FROM orders WHERE status = 'pending'` works fine in dev with 50 pending orders. In production, there might be 2 million pending orders — the query returns a massive result set that exhausts memory.
+
+3. **Missing pagination** — AI-generated API endpoints that query databases often fetch all matching records at once instead of implementing cursor-based or offset pagination.
+
+4. **Expensive JOINs** — The AI might join multiple large tables without understanding the cardinality. A JOIN across two 500M-row tables without proper filtering can take down a database.
+
+5. **Write amplification** — An `UPDATE` without a selective `WHERE` clause might lock millions of rows, blocking all other writes.
+
+*What to recommend:*
+- **Database-specific Cursor Rules:** "All queries on tables with >1M rows must include a LIMIT clause. Always verify that WHERE clause columns are indexed. Use EXPLAIN ANALYZE before committing any new query. Never use SELECT * in production code — specify columns explicitly."
+- **Query review by a DBA or senior backend engineer** for any AI-generated database operations before they merge.
+- **Staging environment with production-scale data** (or a representative subset). If the team only tests against a dev database with 1,000 rows, they'll never catch scale issues before production.
+- **Slow query monitoring** — Set up alerts for queries exceeding a threshold (e.g., 500ms). This catches AI-generated queries that degrade under load before they cause outages.
+
+---
+
+**Q39: "Two developers on the same team both used Agent mode to build features that depend on the same shared service. Neither knew the other was modifying it. Now we have merge conflicts and broken integration. How do we prevent this?"**
+
+*What makes this hard:* This is a **coordination problem** — AI tools accelerate individual work but don't solve multi-developer communication. Agent mode doesn't know what other developers are doing.
+
+*Approach:* AI tools can actually make coordination problems *worse* because they speed up the pace at which developers generate code. Two developers can diverge significantly in a single day instead of over a week.
+
+Why it happened:
+- Both developers asked Agent to modify the same shared service independently. Agent mode doesn't check for in-flight PRs from other developers, nor does it know about work in progress on other branches.
+- The team's branching strategy likely doesn't enforce coordination for shared services.
+
+*What to recommend:*
+- **Code ownership with CODEOWNERS files** — Require review from the service owner when any PR touches shared services. This creates a human coordination point.
+- **Short-lived branches and frequent integration** — The longer branches live, the worse merge conflicts get. Encourage PRs that are small and merged quickly.
+- **Cursor Rules for shared services:** "Before modifying any file in `services/shared/`, check with the team channel to see if someone else is working on it. Prefer additive changes (new functions) over modifying existing interfaces."
+- **Feature flags over feature branches** — Ship incomplete features behind flags to main instead of maintaining long-lived branches. This forces continuous integration and makes conflicts immediately visible.
+- **Standup visibility** — If the team uses standups or async updates, normalize announcing when you're about to modify shared infrastructure. This is a process solution, not a tool solution — and that's okay.
+
+---
+
+**Q40: "A developer noticed that Cursor's Agent keeps importing third-party packages that we haven't approved. Our security policy requires all dependencies to go through a review process. How do we enforce this?"**
+
+*What makes this hard:* AI tools freely suggest dependencies from the open-source ecosystem without awareness of the organization's approved dependency list or supply-chain security policies.
+
+*Approach:* The AI trained on millions of open-source projects and will suggest the most common library for a given task — regardless of whether it's approved in this organization. It doesn't know about your dependency governance process.
+
+*What to recommend:*
+- **Cursor Rules for dependency management:** "Only use packages listed in our approved dependency registry at `docs/approved-packages.md`. If a task requires a package not on the list, flag it for review instead of importing it. Never add dependencies without checking the approved list first."
+- **Lock file enforcement in CI** — If a PR adds a new dependency (detected by changes to `package-lock.json`, `go.sum`, `requirements.txt`, etc.), CI can block the merge and require explicit security team approval.
+- **Dependency scanning tools** — Tools like Snyk, Dependabot, or Socket can scan for newly added dependencies and flag known vulnerabilities, license issues, or unapproved packages automatically in the PR.
+- **Pre-commit hooks** — Add a pre-commit hook that checks for new imports against an allowlist and warns the developer before they even push.
+- Frame it: "AI tools accelerate code writing, but dependency governance is a supply chain security concern that needs its own enforcement layer. Rules reduce the frequency of unapproved imports; CI and scanning catch anything that slips through."
+
+---
+
+## Section 8: How to Practice These
 
 1. **Role-play by persona.** Pick a persona (CTO, CISO, Staff Engineer) and answer 3–4 questions from their section in sequence, as if it's a continuous conversation. The follow-up questions in real life are harder than the first question.
 
@@ -571,6 +820,10 @@ The reframe: "The ADM for a technically sophisticated org isn't a teacher — th
    - To a resistant team that needs to feel safe
    
    The feature is the same. The framing changes completely.
+
+7. **The Engineering Incident drill.** For Section 7 questions, practice a three-part structure: (a) diagnose the root cause using your understanding of the SDLC, (b) explain *why* AI tools contributed to the problem without blaming the tool, and (c) recommend guardrails that prevent recurrence. A credible ADM doesn't just sell — they understand the engineering trade-offs well enough to troubleshoot alongside the team.
+
+8. **The "Why did AI miss this?" exercise.** Pick any of Q29–Q40 and explain to an imaginary VP of Engineering *why* Bugbot/tests/code review didn't catch the issue. This forces you to understand the layers of the quality pipeline and where each layer has blind spots.
 
 ---
 
