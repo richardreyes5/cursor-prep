@@ -4,19 +4,95 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Cursor Product Guide</title>
-    <link rel="stylesheet" href="./cursor-guide-style.css" />
+    <link rel="stylesheet" href="../adm-prep/docs/styles.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.8.1/github-markdown.min.css"
     />
+    <link rel="stylesheet" href="./cursor-guide-style.css" />
   </head>
   <body>
-    <main class="page">
-      <article id="content" class="markdown-body"></article>
-    </main>
+    <button class="menu-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="overlay"></div>
+
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1>Cursor Product Guide</h1>
+        <div class="subtitle">ADM prep</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-part-label">Contents</div>
+        <div id="toc-chapters"></div>
+
+        <div class="nav-part-label">Other guides</div>
+        <a class="nav-link" href="../adm-prep/docs/index.html">ADM Study Guide</a>
+        <a class="nav-link" href="../adm-prep/docs/technical-screen.html">Technical Screen Qs</a>
+        <a class="nav-link" href="../index.html">All projects</a>
+      </nav>
+      <div class="sidebar-footer">Last updated Mar 30, 2026</div>
+    </aside>
+
+    <div class="main">
+      <div class="content product-guide-content" id="content-wrap">
+        <article id="content" class="markdown-body markdown-inner"></article>
+      </div>
+    </div>
+
+    <button class="back-to-top" aria-label="Back to top">&uarr;</button>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="../adm-prep/docs/script.js"></script>
     <script>
+      function partLabelForChapter(n) {
+        if (n <= 2) return "Part I — What Cursor Is";
+        if (n <= 7) return "Part II — Core Surfaces";
+        if (n <= 11) return "Part III — Context & Customization";
+        if (n <= 14) return "Part IV — Tools";
+        if (n <= 17) return "Part V — Enterprise";
+        return null;
+      }
+
+      function shorten(text, max) {
+        const t = text.trim();
+        return t.length > max ? t.slice(0, max - 1) + "…" : t;
+      }
+
+      function populateToc() {
+        const container = document.getElementById("toc-chapters");
+        if (!container) return;
+        const h2s = document.querySelectorAll("#content h2[id]");
+        let lastPart = null;
+        h2s.forEach((h) => {
+          const text = h.textContent.trim();
+          const m = text.match(/^Chapter (\d+):\s*(.+)/);
+          let partLabel = null;
+          if (m) {
+            partLabel = partLabelForChapter(parseInt(m[1], 10));
+          } else {
+            partLabel = "Appendix";
+          }
+          if (partLabel && partLabel !== lastPart) {
+            const div = document.createElement("div");
+            div.className = "nav-part-label";
+            div.textContent = partLabel;
+            container.appendChild(div);
+            lastPart = partLabel;
+          }
+          h.setAttribute("data-section", h.id);
+          const a = document.createElement("a");
+          a.className = "nav-link";
+          a.href = "#" + h.id;
+          if (m) {
+            a.textContent = "Ch " + m[1] + ": " + shorten(m[2], 26);
+          } else {
+            a.textContent = shorten(text, 34);
+          }
+          container.appendChild(a);
+        });
+      }
+
       async function renderGuide() {
         const target = document.getElementById("content");
         try {
@@ -24,7 +100,6 @@
           if (!response.ok) {
             throw new Error("Could not load Cursor-Product-Guide.md");
           }
-
           const markdown = await response.text();
           marked.setOptions({
             gfm: true,
@@ -32,15 +107,17 @@
             headerIds: true,
             mangle: false,
           });
-
           target.innerHTML = marked.parse(markdown);
           document.title = "Cursor Product Guide";
+          populateToc();
+          if (typeof window.initPrepSiteNav === "function") {
+            window.initPrepSiteNav();
+          }
         } catch (error) {
-          target.innerHTML = `
-            <h1>Unable to render guide</h1>
-            <p>${error.message}</p>
-            <p>Make sure <code>Cursor-Product-Guide.md</code> is in the same folder as this HTML file.</p>
-          `;
+          target.innerHTML =
+            "<h1>Unable to render guide</h1><p>" +
+            error.message +
+            "</p><p>Make sure <code>Cursor-Product-Guide.md</code> is in the same folder as this HTML file.</p>";
         }
       }
 
