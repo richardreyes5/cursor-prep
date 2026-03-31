@@ -1,39 +1,241 @@
-/* Cursor Product Guide — layout on top of adm-prep/docs/styles.css */
+/* Cursor Product Guide — matches adm-prep/docs/styles.css design system */
 
 .main .content.product-guide-content {
-  max-width: 880px;
+  max-width: var(--content-max);
   padding-bottom: 120px;
 }
+
+/* ── Intro strip (matches study guide hero links) ── */
+
+.product-guide-content .hero-site-links {
+  font-size: 14px;
+  margin: 0 0 8px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.product-guide-content .hero-site-links a {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.product-guide-content .hero-site-links a:hover {
+  text-decoration: underline;
+}
+
+.product-guide-content .hero-site-links-sep {
+  color: #94a3b8;
+  margin: 0 8px;
+  user-select: none;
+}
+
+/* ── Markdown article (same typography as study guide content) ── */
 
 .markdown-inner {
   box-sizing: border-box;
   min-width: 0;
-  background: #ffffff;
-  border: 1px solid var(--border, #e2e8f0);
-  border-radius: 12px;
-  padding: 40px 44px 80px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
 }
 
-.markdown-inner h1 {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 2rem;
+.markdown-inner > *:first-child {
   margin-top: 0;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border, #e2e8f0);
 }
 
-.markdown-inner table {
-  display: table;
-  width: 100%;
+/* Document title — hero treatment */
+.markdown-inner h1.guide-document-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--heading-color);
+  text-align: center;
+  line-height: 1.2;
+  margin: 0 0 12px;
+  padding: 48px 0 0;
+  border: none;
 }
 
+.markdown-inner h1.guide-document-title + h3 {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text-light);
+  margin: 0 auto 16px;
+  max-width: 640px;
+  line-height: 1.6;
+}
+
+.markdown-inner h1.guide-document-title + h3 + blockquote {
+  margin-top: 8px;
+}
+
+/* First horizontal rule ends intro (after author blockquote) */
+.markdown-inner hr:first-of-type {
+  margin: 28px 0 36px;
+}
+
+/* Part dividers — match .part-header */
+.markdown-inner h1.part-heading {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--heading-color);
+  margin: 80px 0 40px;
+  padding: 40px 0 24px;
+  border-bottom: 2px solid var(--accent);
+  line-height: 1.25;
+}
+
+.markdown-inner h1.part-heading:first-of-type {
+  margin-top: 48px;
+}
+
+/* Chapter headings — match h3.chapter-title */
+.markdown-inner h2.chapter-heading {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--heading-color);
+  margin: 56px 0 20px;
+  padding-top: 24px;
+  line-height: 1.3;
+}
+
+.markdown-inner h2.toc-heading {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--heading-color);
+  margin: 40px 0 16px;
+}
+
+.markdown-inner h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--heading-color);
+  margin: 36px 0 14px;
+}
+
+.markdown-inner h4 {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--heading-color);
+  margin: 28px 0 10px;
+}
+
+.markdown-inner h5 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--heading-color);
+  margin: 22px 0 8px;
+}
+
+.markdown-inner p {
+  margin-bottom: 16px;
+}
+
+.markdown-inner strong {
+  font-weight: 600;
+  color: var(--heading-color);
+}
+
+.markdown-inner a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.markdown-inner a:hover {
+  text-decoration: underline;
+}
+
+.markdown-inner hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 48px 0;
+}
+
+.markdown-inner blockquote {
+  background: var(--blockquote-bg);
+  border-left: 4px solid var(--blockquote-border);
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px;
+  margin: 20px 0 24px;
+  font-size: 15px;
+}
+
+.markdown-inner blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-inner ul,
+.markdown-inner ol {
+  margin: 12px 0 20px 24px;
+}
+
+.markdown-inner li {
+  margin-bottom: 8px;
+}
+
+.markdown-inner li ul,
+.markdown-inner li ol {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.markdown-inner code {
+  font-family: "SF Mono", "Fira Code", ui-monospace, monospace;
+  font-size: 0.9em;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+.markdown-inner pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  overflow-x: auto;
+  margin: 20px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.markdown-inner pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* Tables — inherit global .table-wrapper + table rules from styles.css */
 .markdown-inner .table-wrapper {
   overflow-x: auto;
+  margin: 20px 0 28px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.markdown-inner .table-wrapper table {
+  margin: 0;
+  font-size: 14.5px;
 }
 
 @media (max-width: 900px) {
-  .markdown-inner {
-    padding: 24px 20px 80px;
+  .markdown-inner h1.guide-document-title {
+    font-size: 30px;
+    padding-top: 32px;
+  }
+
+  .markdown-inner h1.part-heading {
+    font-size: 26px;
+  }
+
+  .markdown-inner h2.chapter-heading {
+    font-size: 22px;
   }
 }

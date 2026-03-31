@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Cursor Product Guide</title>
     <link rel="stylesheet" href="../adm-prep/docs/styles.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.8.1/github-markdown.min.css"
-    />
     <link rel="stylesheet" href="./cursor-guide-style.css" />
   </head>
   <body>
@@ -23,20 +19,27 @@
         <div class="subtitle">ADM prep</div>
       </div>
       <nav class="sidebar-nav">
-        <div class="nav-part-label">Contents</div>
-        <div id="toc-chapters"></div>
-
-        <div class="nav-part-label">Other guides</div>
+        <div class="nav-part-label">Cursor prep</div>
+        <a class="nav-link" href="../index.html">All projects (home)</a>
         <a class="nav-link" href="../adm-prep/docs/index.html">ADM Study Guide</a>
         <a class="nav-link" href="../adm-prep/docs/technical-screen.html">Technical Screen Qs</a>
-        <a class="nav-link" href="../index.html">All projects</a>
+
+        <div class="nav-part-label">In this guide</div>
+        <div id="toc-chapters"></div>
       </nav>
       <div class="sidebar-footer">Last updated Mar 30, 2026</div>
     </aside>
 
     <div class="main">
       <div class="content product-guide-content" id="content-wrap">
-        <article id="content" class="markdown-body markdown-inner"></article>
+        <p class="hero-site-links">
+          <a href="../index.html">All projects</a>
+          <span class="hero-site-links-sep" aria-hidden="true">·</span>
+          <a href="../adm-prep/docs/index.html">ADM Study Guide</a>
+          <span class="hero-site-links-sep" aria-hidden="true">·</span>
+          <a href="../adm-prep/docs/technical-screen.html">Technical Screen Qs</a>
+        </p>
+        <article id="content" class="markdown-inner"></article>
       </div>
     </div>
 
@@ -45,51 +48,83 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="../adm-prep/docs/script.js"></script>
     <script>
-      function partLabelForChapter(n) {
-        if (n <= 2) return "Part I — What Cursor Is";
-        if (n <= 7) return "Part II — Core Surfaces";
-        if (n <= 11) return "Part III — Context & Customization";
-        if (n <= 14) return "Part IV — Tools";
-        if (n <= 17) return "Part V — Enterprise";
-        return null;
-      }
-
       function shorten(text, max) {
         const t = text.trim();
         return t.length > max ? t.slice(0, max - 1) + "…" : t;
       }
 
+      function wrapTables(article) {
+        article.querySelectorAll("table").forEach((table) => {
+          if (table.closest(".table-wrapper")) return;
+          const wrap = document.createElement("div");
+          wrap.className = "table-wrapper";
+          table.parentNode.insertBefore(wrap, table);
+          wrap.appendChild(table);
+        });
+      }
+
+      function enhanceMarkdown(article) {
+        wrapTables(article);
+
+        const h1s = article.querySelectorAll("h1");
+        h1s.forEach((h, i) => {
+          const t = h.textContent.trim();
+          if (i === 0 && t === "The Cursor Product Guide") {
+            h.classList.add("guide-document-title");
+          } else if (/^Part\s/i.test(t)) {
+            h.classList.add("part-heading");
+          } else if (/^Appendix$/i.test(t)) {
+            h.classList.add("part-heading");
+          }
+        });
+
+        article.querySelectorAll("h2").forEach((h) => {
+          const t = h.textContent.trim();
+          if (t === "Table of Contents") {
+            h.classList.add("toc-heading");
+          } else if (/^Chapter\s/i.test(t)) {
+            h.classList.add("chapter-heading");
+          } else {
+            h.classList.add("chapter-heading");
+          }
+        });
+      }
+
       function populateToc() {
         const container = document.getElementById("toc-chapters");
-        if (!container) return;
-        const h2s = document.querySelectorAll("#content h2[id]");
-        let lastPart = null;
-        h2s.forEach((h) => {
-          const text = h.textContent.trim();
-          const m = text.match(/^Chapter (\d+):\s*(.+)/);
-          let partLabel = null;
-          if (m) {
-            partLabel = partLabelForChapter(parseInt(m[1], 10));
-          } else {
-            partLabel = "Appendix";
-          }
-          if (partLabel && partLabel !== lastPart) {
+        const article = document.getElementById("content");
+        if (!container || !article) return;
+        container.innerHTML = "";
+
+        const elements = article.querySelectorAll("h1, h2");
+        elements.forEach((el) => {
+          const text = el.textContent.trim();
+          const tag = el.tagName;
+
+          if (tag === "H1") {
+            if (text === "The Cursor Product Guide") return;
             const div = document.createElement("div");
             div.className = "nav-part-label";
-            div.textContent = partLabel;
+            div.textContent = /^Appendix$/i.test(text) ? "Appendix" : text;
             container.appendChild(div);
-            lastPart = partLabel;
+            el.setAttribute("data-section", el.id);
+            return;
           }
-          h.setAttribute("data-section", h.id);
-          const a = document.createElement("a");
-          a.className = "nav-link";
-          a.href = "#" + h.id;
-          if (m) {
-            a.textContent = "Ch " + m[1] + ": " + shorten(m[2], 26);
-          } else {
-            a.textContent = shorten(text, 34);
+
+          if (tag === "H2") {
+            if (text === "Table of Contents") return;
+            el.setAttribute("data-section", el.id);
+            const m = text.match(/^Chapter (\d+):\s*(.+)/);
+            const a = document.createElement("a");
+            a.className = "nav-link";
+            a.href = "#" + el.id;
+            if (m) {
+              a.textContent = "Ch " + m[1] + ": " + shorten(m[2], 24);
+            } else {
+              a.textContent = shorten(text, 34);
+            }
+            container.appendChild(a);
           }
-          container.appendChild(a);
         });
       }
 
@@ -109,6 +144,7 @@
           });
           target.innerHTML = marked.parse(markdown);
           document.title = "Cursor Product Guide";
+          enhanceMarkdown(target);
           populateToc();
           if (typeof window.initPrepSiteNav === "function") {
             window.initPrepSiteNav();
