@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technical Screen — Question Bank</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .question-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 28px 20px;
+      margin: 24px 0;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .question-card .q-number {
+      position: absolute;
+      top: -12px;
+      left: 20px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+    }
+    .question-card .q-text {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--heading-color);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .question-card .q-testing {
+      font-size: 14px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .question-card .q-approach {
+      font-size: 15px;
+      color: var(--text-color);
+      line-height: 1.7;
+    }
+    .question-card .q-approach p:last-child {
+      margin-bottom: 0;
+    }
+    .section-count {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 3px 12px;
+      border-radius: 20px;
+      margin-left: 8px;
+    }
+    .practice-box {
+      background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+      border: 1px solid #bbf7d0;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin: 28px 0;
+    }
+    .practice-box h5 {
+      color: #15803d;
+      margin-top: 0;
+    }
+    .practice-box ol {
+      margin-bottom: 0;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<button class="menu-toggle" aria-label="Toggle navigation">
+  <span></span><span></span><span></span>
+</button>
+<div class="overlay"></div>
+
+<!-- ─── Sidebar ─── -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h1>Technical Screen</h1>
+    <div class="subtitle">Question Bank</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-part-label">Sections</div>
+    <a class="nav-link" href="#s1">Product Depth & Fluency</a>
+    <a class="nav-link" href="#s2">Deployment Scenarios</a>
+    <a class="nav-link" href="#s3">Metrics & Analysis</a>
+    <a class="nav-link" href="#s4">Cross-Functional Skills</a>
+    <a class="nav-link" href="#s5">Curveballs & Stress Tests</a>
+    <a class="nav-link" href="#s6">How to Practice</a>
+
+    <div class="nav-part-label">Other guides</div>
+    <a class="nav-link" href="index.html">ADM Study Guide</a>
+    <a class="nav-link" href="tactical-question-bank.html">Tactical Q Bank</a>
+    <a class="nav-link" href="technical-concepts.html">Technical Concepts</a>
+    <a class="nav-link" href="../../cursor-product/Cursor-Product-Guide.html">Cursor Product Guide</a>
+    <a class="nav-link" href="../../index.html">All projects</a>
+  </nav>
+  <div class="sidebar-footer">Last updated Mar 30, 2026</div>
+</aside>
+
+<!-- ─── Main content ─── -->
+<div class="main">
+<div class="content">
+
+<a href="index.html" class="back-link">&larr; Back to Study Guide</a>
+
+<div class="hero">
+  <h1>Technical Screen — Question Bank</h1>
+  <p class="lead">27 probable questions for the AI Deployment Manager technical screen at Cursor.</p>
+  <p class="meta">By Richard Reyes &middot; Practice out loud &middot; 90–120 seconds per answer</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SECTION 1                             -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="s1" id="s1">
+  <div class="part-label">Section 1</div>
+  <h2>Product Depth & Technical Fluency <span class="section-count">7 Qs</span></h2>
+  <p class="part-intro">These questions test whether you actually understand the product or just memorized talking points.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q1</span>
+  <div class="q-text">"Walk me through what happens — technically — when a developer types a question in Cursor Chat and hits Enter."</div>
+  <div class="q-testing">What they're testing: Can you explain the LLM pipeline accurately without being an engineer?</div>
+  <div class="q-approach">
+    <p>Walk through the four-step pipeline. Cursor gathers context from open files, recent edits, @-mentions, and the codebase index. It constructs a prompt that includes that context plus the question. It routes to the best model (or the one the user/admin selected). The model generates a response, and Cursor renders it in the chat panel.</p>
+    <p>Emphasize that the <strong>context-gathering step</strong> is Cursor's key differentiator — it's why the answer is grounded in the developer's actual project, not generic code from the internet.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q2</span>
+  <div class="q-text">"A customer asks: 'Why should I pay for Cursor when my developers already use ChatGPT for free?' What do you say?"</div>
+  <div class="q-testing">What they're testing: Can you articulate Cursor's value prop versus standalone LLMs?</div>
+  <div class="q-approach">
+    <p>Acknowledge ChatGPT is a great general-purpose tool. Then draw the contrast: ChatGPT doesn't know the customer's codebase — developers have to manually copy/paste code and explain context every time. Cursor sees the entire project, applies team-specific Rules, and can take action (edit files, run tests).</p>
+    <p>It's the difference between asking a stranger for advice versus working with a colleague who's read your whole codebase. Frame in productivity terms: the context-switching cost of toggling between ChatGPT and the editor adds up to hours per week.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q3</span>
+  <div class="q-text">"Explain the difference between Tab, Chat, Cmd+K, and Agent mode. When would a developer use each one?"</div>
+  <div class="q-testing">What they're testing: Do you understand the product surfaces at a workflow level?</div>
+  <div class="q-approach">
+    <p>Map each to the trust gradient with concrete scenarios:</p>
+    <ul>
+      <li><strong>Tab</strong> — Writing code and want the next few lines predicted automatically. Zero effort, passive. Example: typing a function signature and Tab fills in the body.</li>
+      <li><strong>Chat</strong> — Need to ask a question or get an explanation. Example: "How does our auth flow work?" — onboarding to an unfamiliar part of the codebase.</li>
+      <li><strong>Cmd+K</strong> — Have existing code and want to transform it with a natural-language instruction. Example: selecting a function and saying "add input validation."</li>
+      <li><strong>Agent</strong> — Need something built end-to-end across multiple files. Example: "Build a REST endpoint for user profiles with tests and documentation."</li>
+    </ul>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q4</span>
+  <div class="q-text">"What is MCP, and why does it matter for enterprise customers?"</div>
+  <div class="q-testing">What they're testing: Do you understand Cursor's integration story beyond the editor?</div>
+  <div class="q-approach">
+    <p>MCP (Model Context Protocol) is an open standard that lets Cursor's agents connect to external tools — Slack, Datadog, Sentry, Linear, Figma, databases. Think of it as a universal adapter.</p>
+    <p>For enterprises, it means the AI isn't siloed in the code editor — it can read a bug report from Linear, look up the error in Datadog, find the relevant code, fix it, and open a PR. This makes Cursor part of the broader engineering workflow, not just a code-writing tool.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q5</span>
+  <div class="q-text">"A CTO says, 'We have millions of lines of code. Can Cursor actually handle that?' How do you respond?"</div>
+  <div class="q-testing">What they're testing: Do you understand codebase indexing, context windows, and how Cursor manages scale?</div>
+  <div class="q-approach">
+    <p>Acknowledge the concern is valid — context windows have limits. Then explain: codebase indexing creates a searchable semantic map of the entire project, and RAG pulls only the most relevant files into each prompt. The AI doesn't need to "see" all millions of lines at once.</p>
+    <p>Mention secure codebase indexing at scale, where teammates can reuse existing indexes so time-to-first-query drops from hours to seconds. Offer to validate during a pilot on their actual repo.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q6</span>
+  <div class="q-text">"What are Cursor Rules, and how would you help an enterprise team set them up?"</div>
+  <div class="q-testing">What they're testing: Do you understand the operational side — the part you'd actually help customers with?</div>
+  <div class="q-approach">
+    <p>Rules are Markdown files in <code>.cursor/rules/</code> that give the AI persistent instructions — coding standards, architectural patterns, naming conventions. They're version-controlled in Git, so the whole team shares the same standards.</p>
+    <p>During a rollout, work with tech leads to define Rules that reflect their existing code review standards: "Use TypeScript strict mode," "API routes go in <code>app/api/</code>," "Follow our error-handling pattern in <code>utils/errors.ts</code>." This is how you scale consistency across hundreds of developers.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q7</span>
+  <div class="q-text">"What's a hallucination in the context of AI coding tools, and how should teams think about it?"</div>
+  <div class="q-testing">What they're testing: Can you talk honestly about a real limitation without undermining the product?</div>
+  <div class="q-approach">
+    <p>A hallucination is when the AI confidently generates code that looks correct but is subtly wrong — maybe it references an API that doesn't exist, or uses a deprecated pattern.</p>
+    <p>The right framing: AI output should always be reviewed, just like any code from a human colleague. Cursor mitigates this through deep context awareness (grounding responses in the actual codebase via RAG), Rules (enforcing correct patterns), and the human-in-the-loop model. The message: <strong>"Cursor is a power tool, not autopilot."</strong></p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SECTION 2                             -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="s2" id="s2">
+  <div class="part-label">Section 2</div>
+  <h2>Deployment Scenarios & Strategy <span class="section-count">7 Qs</span></h2>
+  <p class="part-intro">These test your ability to think through real-world deployment problems — the core of the ADM role.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q8</span>
+  <div class="q-text">"You land a new enterprise account with 800 engineers. It's week one. What do you do?"</div>
+  <div class="q-testing">What they're testing: Do you have a structured approach, or will you wing it?</div>
+  <div class="q-approach">
+    <p>Phase 0 — Discovery. Meet engineering leadership (CTO, VPs, Directors). Interview 5–10 developers across different teams and seniority levels. Map the tech stack, existing AI tool usage, security/compliance requirements, and the internal decision-making process.</p>
+    <p>The deliverable is an assessment doc that recommends a rollout approach tailored to their situation. Do <em>not</em> propose a pilot until you understand the organization. Key questions: "What does your development workflow look like end-to-end?" "Where do developers spend time that isn't building features?" "What are your security requirements?"</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q9</span>
+  <div class="q-text">"You're running a pilot with 20 developers. After 3 weeks, only 8 are actively using Cursor. What do you do?"</div>
+  <div class="q-testing">What they're testing: Can you diagnose an adoption problem and take action?</div>
+  <div class="q-approach">
+    <p>First, diagnose. Talk to the 12 who aren't using it:</p>
+    <ul>
+      <li><strong>Friction?</strong> Setup issues, slow performance → fix the technical blocker immediately</li>
+      <li><strong>Skepticism?</strong> "I tried it once, the suggestion was wrong" → schedule 1:1 working sessions using their real code</li>
+      <li><strong>Habit?</strong> Defaulting to old tools → introduce Tab only (zero workflow change) and share peer results from the 8 active users</li>
+      <li><strong>Workflow mismatch?</strong> They use JetBrains → check if ACP resolves the issue</li>
+    </ul>
+    <p>Also look at the 8 active users: what features are they using? What wins have they had? Turn those into internal case studies.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q10</span>
+  <div class="q-text">"The CISO blocks the rollout because they're concerned about code leaving the network. How do you handle it?"</div>
+  <div class="q-testing">What they're testing: Can you navigate a cross-functional blocker with technical specificity?</div>
+  <div class="q-approach">
+    <p>Don't fight it — treat it as a legitimate concern. Walk the CISO through Privacy Mode: code is never stored on Cursor's servers and never used for model training. Cursor is SOC 2 Type 2 certified, with zero data retention, AES-256 encryption at rest, and TLS 1.2+ in transit.</p>
+    <p>Offer to connect the CISO with Cursor's security team. Provide documentation (security whitepaper, compliance certifications). If they need a deeper review, offer a controlled pilot with Privacy Mode enforced. Treat security as a <strong>gate to open</strong>, not an objection to overcome.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q11</span>
+  <div class="q-text">"A team says, 'We liked it, but we can't prove ROI to our CFO.' How do you help them?"</div>
+  <div class="q-testing">What they're testing: Can you build a business case, not just a product pitch?</div>
+  <div class="q-approach">
+    <p>Start with pilot data (active users, features used, acceptance rate). Then build the story:</p>
+    <ol>
+      <li><strong>Time savings</strong> — Survey pilot developers: "How much time does Cursor save you per day?" Even 45 min/day is meaningful.</li>
+      <li><strong>The math</strong> — Developers &times; fully-loaded cost &times; time savings % = recovered productivity. Compare to ~$40/user/month license cost.</li>
+      <li><strong>Qualitative wins</strong> — Onboarding speed, satisfaction, fewer colleague interruptions.</li>
+      <li><strong>Risk framing</strong> — "If competitors are adopting AI tools and you're not, you're accepting a growing productivity gap."</li>
+    </ol>
+    <p>Offer to co-build the business case document with the internal champion.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q12</span>
+  <div class="q-text">"How would you handle a rollout at a company that's 70% Java (JetBrains) and 30% Python/TypeScript (VS Code)?"</div>
+  <div class="q-testing">What they're testing: Do you know the product's real-world constraints?</div>
+  <div class="q-approach">
+    <p>As of March 2026, Cursor now works inside JetBrains IDEs through the Agent Client Protocol (ACP) — Java teams no longer have to switch editors.</p>
+    <p>Strategy: start the pilot with Python/TypeScript teams (lowest friction), but run a parallel small group with JetBrains users to validate the ACP experience. Use early wins from the VS Code group to build momentum, then expand to the full Java org once JetBrains experience is validated.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q13</span>
+  <div class="q-text">"You're managing 15 enterprise accounts simultaneously. How do you prioritize your time?"</div>
+  <div class="q-testing">What they're testing: Operational discipline. Can you scale yourself?</div>
+  <div class="q-approach">
+    <p>Segment by deployment stage and risk:</p>
+    <ul>
+      <li><strong>Red</strong> — Stalled adoption, upcoming renewals, active blockers. Daily attention.</li>
+      <li><strong>Yellow</strong> — Mid-rollout, progressing but needing guidance. Weekly check-ins.</li>
+      <li><strong>Green</strong> — Strong adoption, internal champions. Biweekly/monthly strategic check-ins.</li>
+    </ul>
+    <p>Within each week: (1) unblock stalls, (2) advance pilots toward expansion, (3) nurture green accounts toward case studies and referrals. Use leading indicators (activation rate, feature adoption) as an early warning system.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q14</span>
+  <div class="q-text">"A competitor drops their price to $10/user/month. Three of your accounts bring it up. What do you do?"</div>
+  <div class="q-testing">What they're testing: Can you sell on value, not price?</div>
+  <div class="q-approach">
+    <p>Don't panic and don't trash the competitor. Reframe: "The question isn't what the tool costs — it's what it's worth."</p>
+    <ul>
+      <li>Copilot at $10/month gives autocomplete. Cursor at $40/month gives Agent mode, Cloud Agents, Automations, Bugbot, MCP integrations, Rules, and enterprise admin controls.</li>
+      <li>A developer at $180K/year costs ~$90/hour. If Cursor saves even 15 extra minutes/day, that's $45/day in recovered productivity — more than the monthly cost difference.</li>
+      <li>Ask: "Which capabilities are driving value for your team?" If Agent mode or Rules are the answer, those don't exist in Copilot.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SECTION 3                             -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="s3" id="s3">
+  <div class="part-label">Section 3</div>
+  <h2>Metrics & Analytical Thinking <span class="section-count">4 Qs</span></h2>
+  <p class="part-intro">These test whether you can reason with data, not just recite metric names.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q15</span>
+  <div class="q-text">"If you could only track three metrics during a pilot, which three and why?"</div>
+  <div class="q-testing">What they're testing: Can you prioritize what matters most?</div>
+  <div class="q-approach">
+    <ol>
+      <li><strong>Weekly active users (WAU)</strong> — Are people actually using it? If activation is low, nothing else matters.</li>
+      <li><strong>Feature depth</strong> — Are devs using Tab only, or also Chat and Agent? Moving up the trust gradient signals deepening value.</li>
+      <li><strong>Self-reported time saved</strong> — Quick weekly pulse survey. This bridges to ROI and gives qualitative color.</li>
+    </ol>
+    <p>Why not PRs merged or cycle time? Those are lagging indicators that take months to show. In a 4-week pilot, you need <strong>leading indicators</strong> that tell the story now.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q16</span>
+  <div class="q-text">"Activation rate is 85% but the acceptance rate for Tab suggestions is only 15%. What does that tell you?"</div>
+  <div class="q-testing">What they're testing: Can you interpret data and form hypotheses?</div>
+  <div class="q-approach">
+    <p>High activation + low acceptance suggests people are trying Cursor but the suggestions aren't landing. Possible explanations:</p>
+    <ul>
+      <li><strong>Context gap</strong> — Codebase might not be indexed properly, or uses highly proprietary frameworks</li>
+      <li><strong>Rules missing</strong> — Without Rules, AI may suggest code that doesn't match team conventions</li>
+      <li><strong>Comparison bias</strong> — Very fast typists sometimes reject suggestions reflexively</li>
+      <li><strong>Model mismatch</strong> — Default model might not be optimal for their language/framework</li>
+    </ul>
+    <p>Action: interview 3–5 low-acceptance developers, watch them screen-share, check Rules and indexing status.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q17</span>
+  <div class="q-text">"How would you attribute productivity improvements to Cursor specifically versus other changes happening at the same time?"</div>
+  <div class="q-testing">What they're testing: Analytical rigor. Do you understand confounding variables?</div>
+  <div class="q-approach">
+    <ul>
+      <li><strong>Baseline before rollout</strong> — Capture metrics before Cursor is introduced. Compare against the same metrics during and after.</li>
+      <li><strong>Control group</strong> — If the org is large enough, compare teams using Cursor against similar teams that haven't adopted yet.</li>
+      <li><strong>Before/after within individuals</strong> — Track the same developer's output pre- and post-adoption.</li>
+      <li><strong>Self-reported attribution</strong> — Ask devs directly: "Of the time you saved, how much do you attribute to Cursor?"</li>
+      <li><strong>Be honest</strong> — You can't perfectly isolate the variable. Frame it as "strong evidence of contribution" rather than "definitive causation." CTOs respect intellectual honesty.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q18</span>
+  <div class="q-text">"A VP says, 'My senior engineers don't need AI — it's only useful for juniors.' How do you respond?"</div>
+  <div class="q-testing">What they're testing: Can you reframe a misconception without being condescending?</div>
+  <div class="q-approach">
+    <p>Respect the concern — seniors are highly skilled and don't want training wheels. Then reframe: seniors benefit <em>differently</em>, but often more:</p>
+    <ul>
+      <li><strong>Multi-file refactoring</strong> — Agent mode makes it feasible to refactor across 20 files in an afternoon instead of a week.</li>
+      <li><strong>Reducing toil</strong> — Seniors still write boilerplate. AI handles tedious parts so they focus on architecture.</li>
+      <li><strong>Code review efficiency</strong> — Bugbot catches issues before the senior reviews, so their time goes to meaningful architectural feedback.</li>
+      <li><strong>Knowledge transfer</strong> — Seniors encode their expertise into Rules, scaling their standards without being a bottleneck.</li>
+    </ul>
+    <p>Point to Salesforce: their senior engineers started with boring tasks, built trust, then expanded to high-value use cases.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SECTION 4                             -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="s4" id="s4">
+  <div class="part-label">Section 4</div>
+  <h2>Cross-Functional & Soft Skills <span class="section-count">4 Qs</span></h2>
+  <p class="part-intro">These test how you work with other teams and handle interpersonal complexity.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q19</span>
+  <div class="q-text">"You hear the same feature request from 5 different enterprise accounts. How do you communicate that to the Product team?"</div>
+  <div class="q-testing">What they're testing: Are you a structured communicator?</div>
+  <div class="q-approach">
+    <p>Don't just say "5 customers want X." Synthesize:</p>
+    <ol>
+      <li><strong>Identify the underlying problem</strong> — What are all 5 actually trying to solve? Often the root need is the same.</li>
+      <li><strong>Quantify the impact</strong> — Combined ARR? Risk if unaddressed (churn, stalled expansion)?</li>
+      <li><strong>Provide context</strong> — Workarounds today? Effect on adoption trajectory?</li>
+      <li><strong>Suggest a framework</strong> — "These 5 accounts share the same underlying problem: [X]. Here are two solution approaches, and here's my recommendation."</li>
+    </ol>
+    <p>Present in a structured brief, not a Slack message.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q20</span>
+  <div class="q-text">"How would you work with the Sales team to ensure they're positioning Cursor accurately?"</div>
+  <div class="q-testing">What they're testing: Can you influence without authority?</div>
+  <div class="q-approach">
+    <p>The goal is to make Sales more effective, not to police them:</p>
+    <ul>
+      <li><strong>"What Cursor Can and Can't Do" doc</strong> — Updated quarterly, covering features, limitations, and honest positioning.</li>
+      <li><strong>Objection-handling playbooks</strong> — Top 10 objections with ready-made talk tracks.</li>
+      <li><strong>Joint calls</strong> — Sit in on Sales calls with technical buyers. Run the technical portion of demos.</li>
+      <li><strong>Feedback loop</strong> — When misset expectations surface, trace back to the Sales conversation and address constructively.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q21</span>
+  <div class="q-text">"Tell me about a time you had to learn something complex and technical quickly, with no one to teach you."</div>
+  <div class="q-testing">What they're testing: High agency, learning velocity, self-direction.</div>
+  <div class="q-approach">
+    <p>Use a real story. Structure as:</p>
+    <ul>
+      <li><strong>Situation</strong> — What was the context? What made it hard?</li>
+      <li><strong>Action</strong> — Specifically how did you learn? What resources, experiments, strategies?</li>
+      <li><strong>Result</strong> — What did you achieve? How fast?</li>
+      <li><strong>Connection</strong> — "That's exactly what I've done with Cursor — I spent three weeks building projects, reading docs, and studying deployment patterns to speak credibly with technical stakeholders."</li>
+    </ul>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q22</span>
+  <div class="q-text">"Why Cursor? Why this role specifically?"</div>
+  <div class="q-testing">What they're testing: Genuine interest and alignment.</div>
+  <div class="q-approach">
+    <p>Be specific. Reference things only someone who's done real research would know:</p>
+    <ul>
+      <li>The product's architectural advantage (built-in AI vs. plugin)</li>
+      <li>The company's trajectory ($1B ARR, NVIDIA/Stripe/Salesforce adoption)</li>
+      <li>The appeal of the ADM role: the intersection of product, customers, and technical adoption</li>
+      <li>What personally excites you about helping engineering teams adopt AI</li>
+      <li>What you've learned from using Cursor yourself during prep</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SECTION 5                             -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="s5" id="s5">
+  <div class="part-label">Section 5</div>
+  <h2>Curveballs & Stress Tests <span class="section-count">5 Qs</span></h2>
+  <p class="part-intro">Designed to see how you think under pressure when there's no "right" answer.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q23</span>
+  <div class="q-text">"If AI coding tools keep improving, does the role of a deployment manager become unnecessary in 2–3 years?"</div>
+  <div class="q-testing">What they're testing: Long-term thinking and reasoning about ambiguity.</div>
+  <div class="q-approach">
+    <p>The tool gets better, but the human problems don't go away:</p>
+    <ul>
+      <li>Enterprise adoption is a <strong>change management</strong> challenge, not a technology one. Better AI doesn't eliminate structured rollouts and stakeholder alignment.</li>
+      <li>As the tool becomes more powerful (Automations, Cloud Agents), the deployment surface <em>expands</em> — more capabilities to configure, more workflows to integrate, more ROI stories to tell.</li>
+      <li>The role evolves: from "help people use the editor" to "help organizations redesign how engineering teams work with AI." That's bigger, not smaller.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q24</span>
+  <div class="q-text">"A developer tells you privately that junior colleagues are shipping AI-generated code without understanding it. What do you do?"</div>
+  <div class="q-testing">What they're testing: Judgment, empathy, and practical problem-solving.</div>
+  <div class="q-approach">
+    <p>Take the concern seriously — it's a real risk. Don't dismiss it.</p>
+    <ol>
+      <li><strong>Thank them</strong> for the candid feedback.</li>
+      <li><strong>Acknowledge the pattern</strong> — Over-reliance on AI without understanding is a legitimate risk.</li>
+      <li><strong>Propose mitigations</strong> — Code review remains essential. Add Rules that encourage explaining reasoning. Suggest pairing sessions. Recommend "do you understand this code?" as a review criterion.</li>
+      <li><strong>Feed back to leadership</strong> — Frame as an adoption maturity issue, not a product flaw. Invest in training on responsible AI use.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q25</span>
+  <div class="q-text">"Pitch me on Cursor in 60 seconds. Go."</div>
+  <div class="q-testing">What they're testing: Concise, compelling, clear under time pressure.</div>
+  <div class="q-approach">
+    <p>Have this memorized:</p>
+    <ul>
+      <li><strong>Hook (10s)</strong> — "The average software engineer spends less than half their day actually writing code. The rest is searching, understanding, debugging, and repetitive work."</li>
+      <li><strong>Product (20s)</strong> — "Cursor is an AI-native code editor that changes that equation. It understands your entire codebase, can write and edit code from plain-English instructions, and handles multi-file tasks end to end."</li>
+      <li><strong>Proof (15s)</strong> — "64% of the Fortune 500 use Cursor. NVIDIA has 40,000 engineers on it. Salesforce saw double-digit improvements in velocity, quality, and throughput."</li>
+      <li><strong>ADM tie-in (15s)</strong> — "My role would be to help enterprise engineering teams capture that value — understanding their workflows, guiding adoption, and proving ROI."</li>
+    </ul>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q26</span>
+  <div class="q-text">"What's one thing about Cursor's product that you think could be better, and how would you address it with a customer who raises it?"</div>
+  <div class="q-testing">What they're testing: Honesty, product thinking, customer composure.</div>
+  <div class="q-approach">
+    <p>Pick a real limitation (not a deal-breaker). Examples:</p>
+    <ul>
+      <li><strong>Non-determinism</strong> — The same prompt can give different results, frustrating developers who expect predictable tools. Mitigation: Rules constrain output, Plan Mode lets you review before execution, and developers always approve changes.</li>
+      <li><strong>Context limits on massive codebases</strong> — Even with indexing, there's a ceiling. Mitigation: "Cursor's RAG system handles the vast majority of use cases, but for extremely large monorepos, we'd validate during the pilot."</li>
+    </ul>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q27</span>
+  <div class="q-text">"How do you stay current on the AI landscape? What's something you've learned recently?"</div>
+  <div class="q-testing">What they're testing: Genuine curiosity and ongoing learning habits.</div>
+  <div class="q-approach">
+    <p>Be specific. Mention actual sources: Cursor changelog/blog, Hacker News, specific newsletters (The Pragmatic Engineer, Latent Space), AI announcements from OpenAI/Anthropic/Google.</p>
+    <p>Share one genuinely recent, specific insight — something you read or noticed while using Cursor. The more specific and recent, the more credible.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SECTION 6                             -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="s6" id="s6">
+  <div class="part-label">Section 6</div>
+  <h2>How to Practice</h2>
+  <p class="part-intro">Theory won't save you in a live screen. Here's how to make practice count.</p>
+</div>
+
+<div class="practice-box">
+  <h5>The Five Rules of Effective Practice</h5>
+  <ol>
+    <li><strong>Out loud</strong> — Reading silently isn't practice. Say the words. Record yourself.</li>
+    <li><strong>Timed</strong> — Set a 2-minute timer per answer. If you can't get to the point in 2 minutes, you're not concise enough.</li>
+    <li><strong>With follow-ups</strong> — After each answer, ask yourself: "What would they ask next?" Prepare for that too.</li>
+    <li><strong>Weakest areas first</strong> — If a question makes you uncomfortable, that's the one to practice most.</li>
+    <li><strong>Real-world grounding</strong> — Whenever possible, reference your actual experience using Cursor ("When I was building X, I noticed...").</li>
+  </ol>
+</div>
+
+<blockquote>
+  <strong>Remember:</strong> The technical screen isn't about having perfect answers — it's about demonstrating that you think clearly, communicate structured ideas under pressure, and have done the work to understand the product and the role. You've done that work. Now sharpen the delivery.
+</blockquote>
+
+<hr>
+
+<p style="text-align: center; color: var(--text-light); font-size: 14px; margin-top: 48px;">
+  Last updated March 30, 2026 &middot; You've done the study work, Richard. This is about sharpening delivery.
+</p>
+
+</div>
+</div>
+
+<button class="back-to-top" aria-label="Back to top">&uarr;</button>
+
+<script src="script.js"></script>
+</body>
+</html>
