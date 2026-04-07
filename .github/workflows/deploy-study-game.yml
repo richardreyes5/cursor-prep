@@ -2,7 +2,7 @@
 #
 # Setup: Repo → Settings → Pages → Build and deployment → Source: GitHub Actions
 # URL: https://<user>.github.io/<repo>/
-# Game (production build): https://<user>.github.io/<repo>/study-game/dist/
+# Game: https://<user>.github.io/<repo>/study-game/dist/ (build uses relative asset URLs)
 
 name: Deploy Study Game to GitHub Pages
 
@@ -36,15 +36,14 @@ jobs:
           cache: npm
           cache-dependency-path: study-game/package-lock.json
 
-      # Base must match URL path where index.html + assets/ are hosted (…/study-game/dist/).
+      # Relative base so script URLs resolve from …/study-game/dist/index.html → …/dist/assets/…
+      # (Absolute /repo/... paths break if the build on Pages is stale or the repo is renamed.)
       - name: Build Vite app
-        env:
-          REPO: ${{ github.event.repository.name }}
         run: |
           cd study-game
           npm ci
           python3 scripts/parse_content.py
-          npx vite build --base="/${REPO}/study-game/dist/"
+          npx vite build --base=./
 
       - name: Assemble site (hub + docs + game)
         run: |
@@ -54,6 +53,8 @@ jobs:
           cp -R cursor-product site/
           mkdir -p site/study-game/dist
           cp -R study-game/dist/. site/study-game/dist/
+          # Repo study-game/index.html is the Vite dev entry (/src/main.jsx) — replace with redirect to the built app
+          printf '%s\n' '<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta http-equiv="refresh" content="0;url=dist/"/><title>ADM Study Game</title></head><body><p><a href="dist/">Open ADM Study Game</a></p></body></html>' > site/study-game/index.html
 
       - uses: actions/upload-pages-artifact@v3
         with:
