@@ -1,0 +1,15 @@
+PR + BugBot (Sprint 2) — run locally
+====================================
+
+Branch with the study game work: feature/adm-study-game (commit already created).
+
+1. Push the branch (requires GitHub auth on your machine):
+   git push -u origin feature/adm-study-game
+
+2. Open a pull request against main (GitHub UI or GitHub CLI):
+   gh pr create --base main --head feature/adm-study-game --title "feat: ADM study game" --body "Gamified prep app under study-game/. Please run BugBot on this PR."
+
+3. In the GitHub PR, enable / run BugBot (or Cursor BugBot integration) on the changed files under study-game/.
+
+4. After merge, run in study-game/: npm install && npm run build
+   Then open ../index.html and use the Study Game (built) link, or npm run dev for local dev.

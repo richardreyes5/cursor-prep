@@ -1,3 +1,6 @@
+node_modules/
+study-game/node_modules/
+study-game/dist/
 .DS_Store
 *.swp
 *.swo
