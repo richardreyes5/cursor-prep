@@ -2,7 +2,7 @@
 #
 # Setup: Repo → Settings → Pages → Build and deployment → Source: GitHub Actions
 # URL: https://<user>.github.io/<repo>/
-# Game: https://<user>.github.io/<repo>/study-game/
+# Game (production build): https://<user>.github.io/<repo>/study-game/dist/
 
 name: Deploy Study Game to GitHub Pages
 
@@ -36,26 +36,24 @@ jobs:
           cache: npm
           cache-dependency-path: study-game/package-lock.json
 
-      - name: Build Vite app (base = /repo/study-game/)
+      # Base must match URL path where index.html + assets/ are hosted (…/study-game/dist/).
+      - name: Build Vite app
         env:
           REPO: ${{ github.event.repository.name }}
         run: |
           cd study-game
           npm ci
           python3 scripts/parse_content.py
-          npx vite build --base="/${REPO}/study-game/"
+          npx vite build --base="/${REPO}/study-game/dist/"
 
       - name: Assemble site (hub + docs + game)
-        env:
-          REPO: ${{ github.event.repository.name }}
         run: |
           mkdir -p site
           cp index.html site/index.html
-          sed -i 's|href="./study-game/dist/index.html"|href="./study-game/"|g' site/index.html
           cp -R adm-prep site/
           cp -R cursor-product site/
-          mkdir -p site/study-game
-          cp -R study-game/dist/. site/study-game/
+          mkdir -p site/study-game/dist
+          cp -R study-game/dist/. site/study-game/dist/
 
       - uses: actions/upload-pages-artifact@v3
         with:
