@@ -11,6 +11,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Use Node 24 for @actions/* internals (see GitHub Actions Node 20 deprecation)
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 permissions:
   contents: read
   pages: write
@@ -28,32 +32,31 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: "3.12"
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: npm
           cache-dependency-path: study-game/package-lock.json
 
-      # Relative base so script URLs resolve from …/study-game/dist/index.html → …/dist/assets/…
-      # (Absolute /repo/... paths break if the build on Pages is stale or the repo is renamed.)
-      - name: Build Vite app
+      - name: Install dependencies and build Vite app
+        working-directory: study-game
         run: |
-          cd study-game
+          set -euo pipefail
           npm ci
-          python3 scripts/parse_content.py
-          npx vite build --base=./
+          npm run build:gh-pages
 
       - name: Assemble site (hub + docs + game)
         run: |
+          set -euo pipefail
           mkdir -p site
           cp index.html site/index.html
           cp -R adm-prep site/
           cp -R cursor-product site/
           mkdir -p site/study-game/dist
           cp -R study-game/dist/. site/study-game/dist/
-          # Repo study-game/index.html is the Vite dev entry (/src/main.jsx) — replace with redirect to the built app
+          : "Redirect /study-game/ to built app (avoid publishing dev index with /src/main.jsx)"
           printf '%s\n' '<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta http-equiv="refresh" content="0;url=dist/"/><title>ADM Study Game</title></head><body><p><a href="dist/">Open ADM Study Game</a></p></body></html>' > site/study-game/index.html
 
       - uses: actions/upload-pages-artifact@v3
