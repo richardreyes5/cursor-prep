@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technical Concepts Deep Dive &mdash; Engineering Knowledge for ADMs</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .concept-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 28px 20px;
+      margin: 24px 0;
+      box-shadow: var(--shadow);
+    }
+    .concept-card h4 {
+      margin-top: 0;
+      margin-bottom: 14px;
+      font-size: 20px;
+    }
+    .concept-card .label-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .concept-card .label-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .tag-what { background: #eff6ff; color: #1d4ed8; }
+    .tag-why { background: #f0fdf4; color: #15803d; }
+    .tag-talk { background: #fef3c7; color: #b45309; }
+    .tag-example { background: #faf5ff; color: #7c3aed; }
+    .section-count {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 3px 12px;
+      border-radius: 20px;
+      margin-left: 8px;
+    }
+    .code-example {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-x: auto;
+      margin: 12px 0;
+      white-space: pre;
+    }
+    .code-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .code-label.bad { color: #dc2626; }
+    .code-label.good { color: #15803d; }
+    .framework-box {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin: 28px 0;
+      color: #f8fafc;
+    }
+    .framework-box h4 {
+      color: #38bdf8;
+      margin-top: 0;
+    }
+    .framework-box ol {
+      color: #cbd5e1;
+    }
+    .framework-box strong {
+      color: #f8fafc;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<button class="menu-toggle" aria-label="Toggle navigation">
+  <span></span><span></span><span></span>
+</button>
+<div class="overlay"></div>
+
+<!-- ─── Sidebar ─── -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h1>Technical Concepts</h1>
+    <div class="subtitle">Deep Dive</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-part-label">Concepts</div>
+    <a class="nav-link" href="#p1">SDLC Fundamentals</a>
+    <a class="nav-link" href="#p2">Code &amp; Architecture</a>
+    <a class="nav-link" href="#p3">Testing Layers</a>
+    <a class="nav-link" href="#p4">CI/CD &amp; Release Safety</a>
+    <a class="nav-link" href="#p5">Performance &amp; Reliability</a>
+    <a class="nav-link" href="#p6">Security &amp; Governance</a>
+    <a class="nav-link" href="#p7">Metrics &amp; ROI</a>
+    <a class="nav-link" href="#p8">Change Management</a>
+    <a class="nav-link" href="#p9">Industry-Specific</a>
+    <a class="nav-link" href="#p10">Diagnostic Framework</a>
+
+    <div class="nav-part-label">Other guides</div>
+    <a class="nav-link" href="index.html">ADM Study Guide</a>
+    <a class="nav-link" href="technical-screen.html">Technical Screen Qs</a>
+    <a class="nav-link" href="tactical-question-bank.html">Tactical Q Bank</a>
+    <a class="nav-link" href="../../cursor-product/Cursor-Product-Guide.html">Cursor Product Guide</a>
+    <a class="nav-link" href="../../index.html">All projects</a>
+  </nav>
+  <div class="sidebar-footer">Last updated Mar 30, 2026</div>
+</aside>
+
+<!-- ─── Main content ─── -->
+<div class="main">
+<div class="content">
+
+<a href="index.html" class="back-link">&larr; Back to Study Guide</a>
+
+<div class="hero">
+  <p class="site-links">
+    <a href="index.html">ADM Study Guide</a>
+    <span class="site-links-sep" aria-hidden="true">&middot;</span>
+    <a href="technical-screen.html">Technical Screen Qs</a>
+    <span class="site-links-sep" aria-hidden="true">&middot;</span>
+    <a href="tactical-question-bank.html">Tactical Q Bank</a>
+    <span class="site-links-sep" aria-hidden="true">&middot;</span>
+    <a href="../../cursor-product/Cursor-Product-Guide.html">Cursor Product Guide</a>
+  </p>
+  <h1>Technical Concepts Deep Dive</h1>
+  <p class="lead">Every engineering concept an ADM needs to discuss fluently &mdash; explained in plain English with real-world context.</p>
+  <p class="meta">By Richard Reyes &middot; Read sequentially the first time, use as reference after</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  PART 1 — SDLC                         -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="p1" id="p1">
+  <div class="part-label">Part 1</div>
+  <h2>The Software Development Lifecycle <span class="section-count">3 concepts</span></h2>
+  <p class="part-intro">The stages every piece of software goes through. AI tools touch each stage differently &mdash; know where they help, where they&rsquo;re risky, and where they don&rsquo;t apply.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Requirements &rarr; Design &rarr; Build &rarr; Test &rarr; Deploy &rarr; Operate</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>The six stages of building software. <strong>Requirements</strong>: what should it do? <strong>Design</strong>: how will we architect it? <strong>Build</strong>: writing the code. <strong>Test</strong>: verifying it works. <strong>Deploy</strong>: shipping it to real users. <strong>Operate</strong>: monitoring, incidents, performance tuning.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>Cursor primarily accelerates <strong>Build</strong> and <strong>Test</strong>. But AI-generated code can create problems in Deploy (more rollbacks) and Operate (performance issues, memory leaks, incidents). An ADM who only talks about Build is missing where the real pain shows up.</p>
+  <div class="label-row"><span class="label-tag tag-talk">How to talk about it</span></div>
+  <p>&ldquo;Cursor accelerates build and test, but we also need the downstream stages &mdash; deployment and operations &mdash; to have the right guardrails. That means performance testing, progressive rollouts, and observability. AI makes code faster to write; the rest of the pipeline needs to keep up.&rdquo;</p>
+</div>
+
+<div class="concept-card">
+  <h4>Sprints and Agile</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Most modern teams work in short cycles called <strong>sprints</strong> (typically 2 weeks). Each sprint has a goal, tasks, and a deliverable. At the end, the team reviews what shipped and plans the next sprint. This iterative approach is <strong>Agile</strong> (vs. &ldquo;Waterfall,&rdquo; where all requirements are defined upfront).</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>You fit Cursor adoption into existing sprint rhythms. Don&rsquo;t introduce a new tool mid-sprint on a critical deadline. The best time is at the start of a sprint, with a specific task designated for the pilot.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Pull Requests (PRs) and Code Review</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>When a developer finishes a feature, they create a <strong>pull request</strong> (PR) &mdash; a proposal saying &ldquo;here&rsquo;s what I changed, please review it.&rdquo; Other developers review, comment, request changes, and eventually approve. Only then does it merge into the main codebase.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>PRs are the quality gate between &ldquo;code written&rdquo; and &ldquo;code shipped.&rdquo; If reviewers rubber-stamp AI-generated PRs because they look clean, bugs slip through. Key question: &ldquo;Are your reviewers reviewing AI-generated code with the same rigor as human-written code?&rdquo;</p>
+  <div class="label-row"><span class="label-tag tag-example">Real-world example</span></div>
+  <p>A team ships PRs 30% faster with Agent mode, but rollback rate increases. Investigation reveals reviewers were approving faster because AI code <em>looked</em> professional &mdash; well-formatted, good variable names &mdash; but they weren&rsquo;t scrutinizing the logic.</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  PART 2 — Architecture                 -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="p2" id="p2">
+  <div class="part-label">Part 2</div>
+  <h2>Code &amp; Architecture <span class="section-count">6 concepts</span></h2>
+  <p class="part-intro">How software is structured and why it matters when AI generates code at scale.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Frontend, Backend, and Full-Stack</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p><strong>Frontend</strong>: the part users see (web pages, mobile screens). Built with React, TypeScript, HTML/CSS. <strong>Backend</strong>: server-side logic users don&rsquo;t see &mdash; databases, APIs, authentication. Built with Go, Python, Java, Node.js. <strong>Full-stack</strong>: works on both.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>Different teams have different Cursor use cases. Frontend teams benefit from component generation and UI consistency. Backend teams care about API correctness, query performance, and security. You position the tool differently depending on who you&rsquo;re talking to.</p>
+</div>
+
+<div class="concept-card">
+  <h4>APIs (Application Programming Interfaces)</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>A contract between two pieces of software. When a weather app shows the forecast, it calls a weather service&rsquo;s API &mdash; sending a structured request and getting a structured response. APIs define: what you can ask for, how to ask, and what you&rsquo;ll get back.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>API contract inconsistency (Q35) is a classic AI problem. Different Agent sessions generate different (but individually valid) response formats. The fix: OpenAPI specs referenced in Rules so every endpoint follows the same format.</p>
+  <div class="label-row"><span class="label-tag tag-talk">How to talk about it</span></div>
+  <p>&ldquo;APIs are the contracts between services. When AI generates endpoints independently, those contracts can drift. We recommend an OpenAPI spec referenced in Rules so every generated endpoint follows the same format.&rdquo;</p>
+</div>
+
+<div class="concept-card">
+  <h4>Databases and SQL</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Databases store persistent data. <strong>SQL</strong> (Structured Query Language) reads and writes data in relational databases (PostgreSQL, MySQL). Key performance concepts:</p>
+  <ul>
+    <li><strong>Indexes</strong> &mdash; Like a book&rsquo;s index: lets the database find rows without scanning every row. Without an index on a 500M-row table, every query scans all 500M rows (a <strong>full table scan</strong>).</li>
+    <li><strong>N+1 queries</strong> &mdash; Fetching a list, then making a separate query per item. 1,000 items = 1,001 queries instead of 2. Invisible at small scale; devastating at production scale.</li>
+    <li><strong>Table locks</strong> &mdash; Large operations can lock a table, blocking all other operations until the lock releases. In production, everything queues up and times out.</li>
+  </ul>
+  <div class="label-row"><span class="label-tag tag-example">Real-world example</span></div>
+  <p>An AI-generated query joins two 500M-row tables without filtering. In dev (1,000 rows): 5ms. In production: tries to process 250 trillion combinations, exhausts memory, locks the table for 20 minutes.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Microservices vs. Monoliths</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p><strong>Monolith</strong>: entire application is one codebase, deployed as one unit. Simpler to start; harder to scale independently. <strong>Microservices</strong>: application split into many small, independent services (user service, payment service, notification service), each with its own deployment.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>In microservices, architectural drift (Q31) is a bigger risk because each service evolves independently. Governance via shared Rules and templates matters more.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Architectural Drift</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Over time, different parts of a codebase use different patterns for the same problem. One service handles errors with try/catch; another uses result types; a third uses middleware. Each works, but inconsistency makes the codebase harder to understand and maintain.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>Agent mode solves each task in isolation. Without explicit instructions pointing to canonical patterns, it draws from training data &mdash; which contains thousands of valid approaches. Different developers providing different context get different implementations.</p>
+  <div class="label-row"><span class="label-tag tag-talk">How to talk about it</span></div>
+  <p>The fix: pattern-specific Rules pointing to template files (&ldquo;follow the pattern in <code>services/_template/endpoint.go</code>&rdquo;), golden templates, and periodic architecture reviews.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Middleware and Execution Order</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>In web applications, <strong>middleware</strong> is code that runs in a chain before a request reaches its main handler. Each middleware does one thing: rate limiting, authentication, authorization, logging. The <strong>order matters</strong>: rate limiting before auth protects against floods; rate limiting after auth lets attackers overwhelm the auth system.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>AI refactoring might reorder middleware for &ldquo;cleanliness&rdquo; without knowing the order is security-critical (Q32). The fix: explicit Rules documenting the order, integration tests that validate the sequence, and AI-restricted zones for security code.</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  PART 3 — Testing                      -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="p3" id="p3">
+  <div class="part-label">Part 3</div>
+  <h2>Testing Layers <span class="section-count">7 concepts</span></h2>
+  <p class="part-intro">Testing is where AI tools create the most subtle problems. Understanding each layer &mdash; and its blind spots &mdash; is critical.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Unit Tests</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Tests that verify a single function in isolation. Fast (milliseconds), deterministic, and mock all external dependencies. Example: verify that <code>add(2, 3)</code> returns <code>5</code>.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>AI is excellent at generating unit tests but tends to generate <em>too many</em> (Q33) and make them <em>too shallow</em> (Q30). A test that checks <code>add(2, 3) == 5</code> doesn&rsquo;t test what happens with <code>null</code>, <code>Infinity</code>, or a string.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Integration Tests</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Tests that verify how multiple components work <em>together</em>. Instead of testing &ldquo;add&rdquo; alone, verify that when a user submits a form, the API receives the data, validates it, stores it in the database, and returns the correct response.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>Integration tests catch bugs in the <em>seams</em> between components &mdash; exactly where unit tests don&rsquo;t reach. AI tools are less reliable at generating these because they require understanding how the full system connects.</p>
+</div>
+
+<div class="concept-card">
+  <h4>End-to-End (E2E) Tests</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Tests simulating a real user: a browser automation tool clicks buttons, fills forms, navigates pages, and verifies results &mdash; as if a human were using the product.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>E2E tests catch the most realistic bugs but are slow and fragile. They&rsquo;re the top of the testing pyramid &mdash; few in number, covering critical user journeys. AI rarely generates good E2E tests because they require understanding user workflows, not just code.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Contract Tests</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Tests verifying the <em>agreement</em> between two services. If Service A expects <code>{ user: { id: 123, name: "Alice" } }</code> from Service B, a contract test verifies Service B actually returns that shape &mdash; and that Service A handles it correctly.</p>
+  <div class="label-row"><span class="label-tag tag-talk">How to talk about it</span></div>
+  <p>&ldquo;Contract tests validate that two services agree on the data format between them. When AI generates endpoints independently, contract tests are the safety net that catches format inconsistencies before deployment.&rdquo;</p>
+</div>
+
+<div class="concept-card">
+  <h4>Visual Regression Tests</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Tests that screenshot UI components and compare them pixel-by-pixel against a baseline. If a code change moves a button 3 pixels or changes a font color, the test flags it.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>For frontend-heavy companies (Figma, Adobe), AI-generated UI code might subtly alter styling without breaking functional tests. Visual regression tests catch what functional tests miss.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Load Testing</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Simulating thousands of concurrent users to measure performance under stress. Tools like k6, Locust, or JMeter send high request volumes and measure response times, error rates, and resource consumption.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>AI-generated code that works at small scale often fails under load (Q29, Q38). Load testing in staging catches performance regressions before production.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Test Tiering in CI</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Organizing tests by speed and running them at different stages:</p>
+  <div class="table-wrapper">
+  <table>
+    <thead><tr><th>Tier</th><th>What</th><th>When</th><th>Speed</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Tier 1</strong></td><td>Unit tests</td><td>Every commit</td><td>Seconds</td></tr>
+      <tr><td><strong>Tier 2</strong></td><td>Integration tests</td><td>Every PR</td><td>Minutes</td></tr>
+      <tr><td><strong>Tier 3</strong></td><td>E2E + load tests</td><td>Nightly / pre-release</td><td>Hours</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>When AI quadruples the test suite (Q33), running everything in one stage makes CI unbearably slow. Tiering keeps feedback fast for developers while still running comprehensive tests before deployment.</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  PART 4 — CI/CD                        -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="p4" id="p4">
+  <div class="part-label">Part 4</div>
+  <h2>CI/CD &amp; Release Safety <span class="section-count">5 concepts</span></h2>
+  <p class="part-intro">The automated systems that stand between &ldquo;code written&rdquo; and &ldquo;code in production.&rdquo;</p>
+</div>
+
+<div class="concept-card">
+  <h4>CI (Continuous Integration)</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>An automated system that runs on every code push: compiles, runs tests, checks linting, scans for vulnerabilities, and reports pass/fail. Common tools: GitHub Actions, Jenkins, CircleCI, GitLab CI.</p>
+  <p><strong>Think of it as:</strong> A rigorous automated inspector checking every piece of work before it enters the building.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>CI is the automated quality gate. When AI accelerates code production, CI must scale to match. If the pipeline takes 45 minutes but PRs arrive every 20 minutes, the pipeline becomes the bottleneck.</p>
+</div>
+
+<div class="concept-card">
+  <h4>CD (Continuous Deployment / Delivery)</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p><strong>Continuous Delivery</strong>: code is always <em>ready</em> to deploy but requires a human to push the button. <strong>Continuous Deployment</strong>: code deploys automatically after CI passes.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>The faster code auto-deploys, the more important CI quality is. If AI-generated code passes CI (because tests are shallow) and auto-deploys, bugs reach production instantly.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Canary Deployments</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Instead of deploying to all users at once, deploy to 1&ndash;5% first. If metrics look healthy (no errors, no latency increase), gradually expand. If something breaks, only 1% of users are affected.</p>
+  <p><strong>Think of it as:</strong> The canary in the coal mine &mdash; a small group that signals danger before it spreads.</p>
+  <div class="label-row"><span class="label-tag tag-talk">How to talk about it</span></div>
+  <p>&ldquo;Progressive rollouts &mdash; canaries, percentage-based releases &mdash; give you a production-grade safety net. Instead of shipping to 100% and hoping, you validate with real traffic at 1% and only expand when metrics are clean.&rdquo;</p>
+</div>
+
+<div class="concept-card">
+  <h4>Feature Flags</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>A toggle that lets you turn a feature on or off without deploying new code. Enable for specific users, a percentage of traffic, or specific environments. If problems arise, flip the flag off &mdash; no deployment needed.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>Feature flags decouple &ldquo;shipping code&rdquo; from &ldquo;enabling features.&rdquo; Developers can merge AI-generated code immediately (avoiding long branches and merge conflicts &mdash; Q39) but keep it hidden until validated.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Rollbacks</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Reverting a deployment to the previous known-good version when production breaks. The emergency brake.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>Rollback rate is a quality signal. If it rises after AI adoption (Q36), code is reaching production with undetected issues. The fix: strengthen quality layers, not slow down.</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  PART 5 — Performance                  -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="p5" id="p5">
+  <div class="part-label">Part 5</div>
+  <h2>Performance &amp; Reliability <span class="section-count">6 concepts</span></h2>
+  <p class="part-intro">The production problems that surface when AI-generated code meets real-world scale and load.</p>
+</div>
+
+<div class="concept-card">
+  <h4>The N+1 Query Problem</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Code makes 1 query to fetch a list, then N separate queries to fetch related data for each item. 1,000 items = 1,001 queries instead of 2.</p>
+  <p class="code-label bad">Bad: N+1 pattern (101 queries for 100 orders)</p>
+  <div class="code-example">orders = db.query("SELECT * FROM orders LIMIT 100")
+for order in orders:
+    customer = db.query("SELECT * FROM customers WHERE id = ?", order.customer_id)</div>
+  <p class="code-label good">Good: Batch pattern (2 queries for 100 orders)</p>
+  <div class="code-example">orders = db.query("SELECT * FROM orders LIMIT 100")
+customer_ids = [o.customer_id for o in orders]
+customers = db.query("SELECT * FROM customers WHERE id IN (?)", customer_ids)</div>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>Agent mode solves for correctness, not performance. The N+1 pattern returns the right data &mdash; it&rsquo;s just hundreds of times slower at scale. Fix with Rules: &ldquo;always use batch queries instead of loops.&rdquo;</p>
+</div>
+
+<div class="concept-card">
+  <h4>Memory Leaks</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>A program allocates memory but never releases it. Over time, usage grows until the process crashes.</p>
+  <p><strong>Common causes in AI-generated code:</strong></p>
+  <ul>
+    <li><strong>Event listeners never cleaned up</strong> &mdash; Agent adds a listener in a repeatedly-called function. Each call adds one; none are removed.</li>
+    <li><strong>Caching without eviction</strong> &mdash; In-memory cache with no max size or expiration. Grows forever.</li>
+    <li><strong>Connection pool exhaustion</strong> &mdash; Each call opens a new DB connection but doesn&rsquo;t release it.</li>
+  </ul>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>Unit tests run in milliseconds &mdash; no time for leaks to accumulate. Leaks only surface under sustained load (hours/days). Fix: resource management Rules + sustained load testing in staging.</p>
+</div>
+
+<div class="concept-card">
+  <h4>p95 Latency</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>The response time that is faster than 95% of all responses. If p95 is 400ms, 95% of requests complete within 400ms. Teams track p95 (or p99) because <strong>averages hide outliers</strong>. An average of 50ms might mask 5% of requests taking 3 seconds.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>If AI-generated code introduces slow queries, p95 often degrades before the average does &mdash; it&rsquo;s an early warning signal.</p>
+</div>
+
+<div class="concept-card">
+  <h4>APM (Application Performance Monitoring)</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Tools monitoring real-time application performance: response times, error rates, query durations, memory/CPU usage, and request traces. Common tools: Datadog, New Relic, Dynatrace, Grafana.</p>
+  <div class="label-row"><span class="label-tag tag-talk">How to talk about it</span></div>
+  <p>&ldquo;APM gives you the observability layer to connect performance changes to specific code changes. When a team reports degraded response times after heavy Agent use, APM pinpoints which endpoints, queries, and PRs introduced the regression.&rdquo;</p>
+</div>
+
+<div class="concept-card">
+  <h4>Observability (Logs, Metrics, Traces)</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>The practice of understanding what&rsquo;s happening inside a system, built on three pillars:</p>
+  <ol>
+    <li><strong>Logs</strong> &mdash; Timestamped event records (&ldquo;User 123 logged in at 14:32&rdquo;)</li>
+    <li><strong>Metrics</strong> &mdash; Numerical measurements over time (CPU usage, error rate)</li>
+    <li><strong>Traces</strong> &mdash; Full path of a request through the system (frontend &rarr; API &rarr; auth &rarr; database &rarr; response)</li>
+  </ol>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>When AI-generated code causes problems that tests missed, observability is the last line of defense that catches them in production.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Runbooks</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Documented step-by-step procedures for handling specific incidents: &ldquo;If the connection pool is exhausted, do X. If the payment service returns 500 errors, do Y.&rdquo; Turns incident response from improvisation into a repeatable process.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>An ADM can help teams create runbooks for AI-specific failure modes: &ldquo;If you suspect AI-generated code caused a performance regression, here&rsquo;s how to trace it with APM, identify the PR, and roll back.&rdquo;</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  PART 6 — Security                     -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="p6" id="p6">
+  <div class="part-label">Part 6</div>
+  <h2>Security &amp; Governance <span class="section-count">7 concepts</span></h2>
+  <p class="part-intro">The controls, boundaries, and compliance frameworks that enterprise customers require before deploying AI tools.</p>
+</div>
+
+<div class="concept-card">
+  <h4>VPC (Virtual Private Cloud)</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>A private, isolated network within a cloud provider (AWS, GCP, Azure). Resources inside a VPC communicate with each other; traffic to the outside internet is strictly controlled. Think of it as a walled compound with a guarded gate.</p>
+  <div class="label-row"><span class="label-tag tag-talk">How to talk about it</span></div>
+  <p>&ldquo;For customers with strict VPC requirements, we discuss self-hosted options so no code or telemetry leaves their network boundary. If evaluation takes time, we start a pilot on non-sensitive code while the self-hosted architecture is assessed.&rdquo;</p>
+</div>
+
+<div class="concept-card">
+  <h4>Least Privilege</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Every person, system, or tool should have only the minimum access needed for its job. A frontend developer shouldn&rsquo;t have production database credentials.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>When configuring AI tools, least privilege means: the AI should only see the code relevant to its task, not secrets, credentials, or unrelated internal documentation. Rules and <code>.cursorignore</code> limit what the AI accesses.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Dependency Governance</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Controlling which external libraries can be used. Every dependency is someone else&rsquo;s code you&rsquo;re trusting to work correctly, be secure, and be maintained. <strong>Supply chain attacks</strong> inject malicious code into popular libraries.</p>
+  <p><strong>Common tools:</strong> Snyk (vulnerability scanning), Dependabot (auto-update PRs), Socket (suspicious behavior detection).</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>AI freely suggests dependencies without knowing the org&rsquo;s approved list (Q40). Fix: Rules referencing an approved list, CI blocking unapproved additions, and scanning tools as a safety net.</p>
+</div>
+
+<div class="concept-card">
+  <h4>CODEOWNERS</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>A repository file defining which people or teams must review changes to specific directories. If CODEOWNERS says &ldquo;changes to <code>services/auth/</code> require @security-team,&rdquo; any PR touching auth code automatically requires that team&rsquo;s approval.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>Creates human coordination points for sensitive code. Prevents Q39 (parallel modifications without coordination) and Q32 (AI refactoring security code without security review).</p>
+</div>
+
+<div class="concept-card">
+  <h4>Tenant Separation</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>In multi-tenant systems, ensuring Customer A&rsquo;s data is completely isolated from Customer B&rsquo;s. No query, bug, or misconfiguration should ever expose one tenant&rsquo;s data to another.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>For consulting firms (PwC, Deloitte), the AI must never learn from Client A&rsquo;s code when working on Client B&rsquo;s. Privacy Mode and admin controls are the key discussion points.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Compliance Frameworks (SOC 2, SOX, PCI-DSS, HIPAA, GxP)</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <ul>
+    <li><strong>SOC 2</strong> &mdash; Security, availability, processing integrity, confidentiality, privacy controls</li>
+    <li><strong>SOX</strong> &mdash; Financial reporting controls (public companies)</li>
+    <li><strong>PCI-DSS</strong> &mdash; Payment card data security</li>
+    <li><strong>HIPAA</strong> &mdash; Healthcare data protection</li>
+    <li><strong>GxP</strong> &mdash; Good Practice regulations for life sciences (pharma, biotech)</li>
+  </ul>
+  <div class="label-row"><span class="label-tag tag-talk">How to talk about it</span></div>
+  <p>&ldquo;AI-generated code flows through the same PR, review, and CI pipeline as human-written code. The audit trail is preserved: who created the PR, who reviewed and approved, what tests ran, when it deployed. For GxP or SOX environments, we add Rules requiring documented justification for each change.&rdquo;</p>
+</div>
+
+<div class="concept-card">
+  <h4>.cursorignore</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>A config file (like <code>.gitignore</code>) telling Cursor which files to exclude from its codebase index. Excluded files won&rsquo;t be used as context for AI suggestions.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>Two uses: (1) exclude deprecated code so AI stops referencing it (Q37), and (2) exclude sensitive directories from AI context for security. In regulated environments, <code>.cursorignore</code> is part of the security controls discussion.</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  PART 7 — Metrics                      -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="p7" id="p7">
+  <div class="part-label">Part 7</div>
+  <h2>Metrics &amp; ROI <span class="section-count">7 concepts</span></h2>
+  <p class="part-intro">How to measure AI tool impact and translate technical metrics into business outcomes.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Activation Rate</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Percentage of licensed users meaningfully using the tool (beyond just installing it &mdash; actually using Agent, Chat, or Tab in real workflows).</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>200 seats but only 50 active users = 25% activation. This signals an enablement gap &mdash; an ADM&rsquo;s core problem to solve.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Depth of Use</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>How deeply users engage beyond activation:</p>
+  <ul>
+    <li><strong>Light</strong> &mdash; Tab completions only</li>
+    <li><strong>Moderate</strong> &mdash; Tab + Chat for Q&amp;A and explanation</li>
+    <li><strong>Deep</strong> &mdash; Agent mode + Rules + codebase-aware workflows</li>
+  </ul>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>Depth correlates with perceived value and renewal likelihood. Moving users from Light to Deep is an ADM&rsquo;s leverage point.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Cycle Time</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Elapsed time from &ldquo;work started&rdquo; to &ldquo;deployed in production.&rdquo; Includes coding, review, CI, and deployment time.</p>
+  <div class="label-row"><span class="label-tag tag-talk">How to talk about it</span></div>
+  <p>&ldquo;If Cursor reduces average cycle time from 5 days to 3.5 days, that&rsquo;s a 30% improvement &mdash; directly translatable to faster feature delivery and more roadmap capacity.&rdquo;</p>
+</div>
+
+<div class="concept-card">
+  <h4>PR Latency</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Time between a PR being opened and being merged. Long PR latency signals review bottlenecks, large PRs, or unclear ownership.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>AI should reduce PR latency. If it increases after adoption, something&rsquo;s wrong &mdash; possibly larger PRs or review fatigue.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Rollback Rate</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Percentage of deployments that need to be reverted. Healthy: under 5%. Rising rollback rate = code quality degrading.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>The counter-metric to velocity. A team shipping 30% more PRs but with doubled rollback rate may have worse net quality. Always pair velocity metrics with quality metrics.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Escaped Defects</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Bugs that &ldquo;escape&rdquo; the quality pipeline (tests, review, staging) and reach production.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>AI-generated code with shallow tests creates more escaped defects. Tracking this over time shows whether quality guardrails are keeping up with AI-assisted velocity.</p>
+</div>
+
+<div class="concept-card">
+  <h4>ROI Storytelling</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Translating technical metrics into business outcomes:</p>
+  <div class="table-wrapper">
+  <table>
+    <thead><tr><th>Technical Metric</th><th>Business Outcome</th></tr></thead>
+    <tbody>
+      <tr><td>30% faster cycle time</td><td>Ship features faster &rarr; faster time-to-market</td></tr>
+      <tr><td>45 min/day saved &times; 200 devs</td><td>150 hours/day recovered capacity</td></tr>
+      <tr><td>25% fewer escaped defects</td><td>Fewer incidents &rarr; lower cost, better customer trust</td></tr>
+      <tr><td>50% faster onboarding</td><td>New hires productive in 2 weeks instead of 4</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="label-row"><span class="label-tag tag-talk">How to talk about it</span></div>
+  <p>&ldquo;We measure adoption internally, but the story for the CFO is different: recovered engineering capacity, faster delivery, and reduced incident costs. The key is translating developer experience metrics into the language of business outcomes.&rdquo;</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  PART 8 — Change Management            -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="p8" id="p8">
+  <div class="part-label">Part 8</div>
+  <h2>Change Management &amp; Rollout <span class="section-count">4 concepts</span></h2>
+  <p class="part-intro">How to deploy a tool across an organization without chaos.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Champion Model</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Identify 3&ndash;5 enthusiastic, respected engineers per team/region. Give them early access, deeper training, and a direct feedback channel. They become local advocates who help peers &mdash; more effective than mandates or external trainers.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>Engineers trust other engineers. A champion saying &ldquo;this saved me 2 hours on that migration&rdquo; outweighs any polished demo.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Multi-Wave Rollout</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <ul>
+    <li><strong>Wave 1 (Pilot)</strong> &mdash; 10&ndash;20 engineers, one team. Goal: prove value, identify issues, build the playbook.</li>
+    <li><strong>Wave 2 (Expansion)</strong> &mdash; 3&ndash;5 teams. Goal: validate the playbook works across workflows.</li>
+    <li><strong>Wave 3 (Scale)</strong> &mdash; Org-wide. Goal: standardize governance, measure aggregate ROI.</li>
+  </ul>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>This is literally your deployment strategy. Each wave has different priorities: Wave 1 is learning, Wave 2 is proving repeatability, Wave 3 is governance and scale.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Enablement vs. Training</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p><strong>Training</strong> teaches how to use a feature (&ldquo;here&rsquo;s how Agent mode works&rdquo;). <strong>Enablement</strong> helps integrate the tool into specific workflows (&ldquo;here&rsquo;s how to use Agent mode for your Go microservices&rdquo;). Enablement is harder but stickier.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>High activation but low depth = training happened but enablement didn&rsquo;t. The team knows what Cursor <em>can</em> do; they don&rsquo;t know how to make it work for <em>their</em> codebase.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Shadow AI</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Employees using AI tools without organizational approval &mdash; personal accounts, browser tools, copy-pasting code to ChatGPT. Creates security and compliance risk because the org has zero visibility.</p>
+  <div class="label-row"><span class="label-tag tag-talk">How to talk about it</span></div>
+  <p>&ldquo;The question isn&rsquo;t whether your engineers will use AI. It&rsquo;s whether they&rsquo;ll use it with guardrails or without. Managed deployment replaces shadow AI with governed AI.&rdquo;</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  PART 9 — Industry                     -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="p9" id="p9">
+  <div class="part-label">Part 9</div>
+  <h2>Industry-Specific Concepts <span class="section-count">4 concepts</span></h2>
+  <p class="part-intro">Technical details that matter when engaging specific verticals.</p>
+</div>
+
+<div class="concept-card">
+  <h4>Embedded Systems and C/C++</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Computers built into devices &mdash; car dashboards, medical devices, IoT sensors, Samsung TVs, NVIDIA firmware. Programmed in C/C++ for precise hardware control and manual memory management.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>AI handles C/C++ less well than web languages (less training data), build systems are custom, and testing requires hardware-in-the-loop. Be honest: embedded is a later-wave candidate, with early value in docs, test scaffolding, and CI scripting.</p>
+</div>
+
+<div class="concept-card">
+  <h4>CUDA</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>NVIDIA&rsquo;s framework for running code on GPUs instead of CPUs. GPUs run thousands of operations in parallel &mdash; essential for AI/ML training and scientific simulation. CUDA has unique constraints: thread management, memory hierarchy, synchronization.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>NVIDIA engineers write CUDA code. AI coding tools are useful for scaffolding and standard logic, but not yet reliable for performance-critical kernel optimization. Position carefully.</p>
+</div>
+
+<div class="concept-card">
+  <h4>GxP and Validation (Life Sciences)</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Regulatory standards for pharma/biotech/medical devices requiring every change to be validated: documented, reviewed, tested, traced. GxP covers GMP (Manufacturing), GLP (Laboratory), and GCP (Clinical).</p>
+  <div class="label-row"><span class="label-tag tag-talk">How to talk about it</span></div>
+  <p>&ldquo;AI-generated code enters the same controlled change process. The audit trail &mdash; PR history, approvals, test results, deployment records &mdash; is preserved. For GxP environments, we add Rules requiring documented justification for each change.&rdquo;</p>
+</div>
+
+<div class="concept-card">
+  <h4>PMS (Property Management System)</h4>
+  <div class="label-row"><span class="label-tag tag-what">What it is</span></div>
+  <p>Software that hotels use to manage reservations, check-ins, billing, and guest profiles. A PMS integrates with dozens of external systems: payment processors, booking platforms, loyalty programs, housekeeping, and door locks.</p>
+  <div class="label-row"><span class="label-tag tag-why">Why it matters</span></div>
+  <p>PMS environments are integration-heavy. AI helps write integration code, but AI-generated mocks of third-party systems may not represent real behavior. Strong contract and integration testing are essential.</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  PART 10 — Framework                   -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="p10" id="p10">
+  <div class="part-label">Part 10</div>
+  <h2>The Diagnostic Framework</h2>
+  <p class="part-intro">When a customer describes a problem, use this mental model to diagnose it.</p>
+</div>
+
+<div class="framework-box">
+  <h4>4-Step Diagnostic</h4>
+  <ol>
+    <li><strong>Where in the SDLC did it originate?</strong> &mdash; Build (bad pattern)? Test (shallow coverage)? Deploy (no canary)? Operate (no monitoring)?</li>
+    <li><strong>Why didn&rsquo;t quality layers catch it?</strong> &mdash; Unit tests too shallow? Integration tests missing? Review rubber-stamped? CI not checking this class of issue? Staging doesn&rsquo;t match production?</li>
+    <li><strong>What guardrail prevents it?</strong> &mdash; Rules? CI enforcement? Review process (CODEOWNERS)? Observability? Deployment strategy (canary, flags)?</li>
+    <li><strong>How do you frame it?</strong> &mdash; Acknowledge without blaming the tool. Explain the gap. Propose the guardrail. Connect to business outcome.</li>
+  </ol>
+</div>
+
+<div class="callout callout-tip">
+  <div class="callout-title">Example: Q29 &mdash; Performance Degradation</div>
+  <p><strong>1. Originated in Build</strong> &mdash; AI generated N+1 queries.<br>
+  <strong>2. Missed by Tests</strong> &mdash; Unit tests don&rsquo;t test performance; staging had small data.<br>
+  <strong>3. Guardrail:</strong> Performance Rules + load testing in CI + APM monitoring.<br>
+  <strong>4. Frame it:</strong> &ldquo;Bugbot catches correctness issues. Performance requires a different validation layer &mdash; we recommend performance-focused Rules and load testing in your CI pipeline.&rdquo;</p>
+</div>
+
+<div class="callout callout-tip">
+  <div class="callout-title">Example: Q34 &mdash; Memory Leaks</div>
+  <p><strong>1. Originated in Build</strong> &mdash; Event listeners never cleaned up.<br>
+  <strong>2. Missed by Tests</strong> &mdash; Unit tests are too short-lived to observe memory growth.<br>
+  <strong>3. Guardrail:</strong> Resource management Rules + sustained load testing + heap profiling.<br>
+  <strong>4. Frame it:</strong> &ldquo;Memory leaks are invisible to short-lived tests. We add Rules requiring cleanup patterns and run sustained load tests in staging to catch growth before production.&rdquo;</p>
+</div>
+
+<div class="callout callout-tip">
+  <div class="callout-title">Example: Q30 &mdash; Production Bugs Despite Green CI</div>
+  <p><strong>1. Originated in Test</strong> &mdash; AI-generated tests were happy-path only.<br>
+  <strong>2. Missed by Review</strong> &mdash; Test files weren&rsquo;t reviewed with the same rigor as production code.<br>
+  <strong>3. Guardrail:</strong> Rules requiring edge-case tests + senior review of test files + contract tests at boundaries.<br>
+  <strong>4. Frame it:</strong> &ldquo;AI-generated tests increase coverage quantity. The team still needs to ensure coverage quality &mdash; testing the failure modes that only experience teaches you to anticipate.&rdquo;</p>
+</div>
+
+<hr>
+
+<p style="text-align: center; color: var(--text-light); font-size: 14px; margin-top: 48px;">
+  Last updated March 30, 2026 &middot; This guide is your technical foundation. The Tactical Question Bank gives you the scenarios; this gives you the knowledge to diagnose and discuss them fluently.
+</p>
+
+</div>
+</div>
+
+<button class="back-to-top" aria-label="Back to top">&uarr;</button>
+
+<script src="script.js"></script>
+</body>
+</html>

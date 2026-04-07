@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cursor Product Guide</title>
+    <link rel="stylesheet" href="../adm-prep/docs/styles.css" />
+    <link rel="stylesheet" href="./cursor-guide-style.css" />
+  </head>
+  <body>
+    <button class="menu-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="overlay"></div>
+
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1>Cursor Product Guide</h1>
+        <div class="subtitle">ADM prep</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-part-label">Cursor prep</div>
+        <a class="nav-link" href="../index.html">All projects (home)</a>
+        <a class="nav-link" href="../adm-prep/docs/index.html">ADM Study Guide</a>
+        <a class="nav-link" href="../adm-prep/docs/technical-screen.html">Technical Screen Qs</a>
+
+        <div class="nav-part-label">In this guide</div>
+        <div id="toc-chapters"></div>
+      </nav>
+      <div class="sidebar-footer">Last updated Mar 30, 2026</div>
+    </aside>
+
+    <div class="main">
+      <div class="content product-guide-content" id="content-wrap">
+        <p class="hero-site-links">
+          <a href="../index.html">All projects</a>
+          <span class="hero-site-links-sep" aria-hidden="true">·</span>
+          <a href="../adm-prep/docs/index.html">ADM Study Guide</a>
+          <span class="hero-site-links-sep" aria-hidden="true">·</span>
+          <a href="../adm-prep/docs/technical-screen.html">Technical Screen Qs</a>
+        </p>
+        <article id="content" class="markdown-inner"></article>
+      </div>
+    </div>
+
+    <button class="back-to-top" aria-label="Back to top">&uarr;</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="../adm-prep/docs/script.js"></script>
+    <script>
+      function shorten(text, max) {
+        const t = text.trim();
+        return t.length > max ? t.slice(0, max - 1) + "…" : t;
+      }
+
+      function wrapTables(article) {
+        article.querySelectorAll("table").forEach((table) => {
+          if (table.closest(".table-wrapper")) return;
+          const wrap = document.createElement("div");
+          wrap.className = "table-wrapper";
+          table.parentNode.insertBefore(wrap, table);
+          wrap.appendChild(table);
+        });
+      }
+
+      function enhanceMarkdown(article) {
+        wrapTables(article);
+
+        const h1s = article.querySelectorAll("h1");
+        h1s.forEach((h, i) => {
+          const t = h.textContent.trim();
+          if (i === 0 && t === "The Cursor Product Guide") {
+            h.classList.add("guide-document-title");
+          } else if (/^Part\s/i.test(t)) {
+            h.classList.add("part-heading");
+          } else if (/^Appendix$/i.test(t)) {
+            h.classList.add("part-heading");
+          }
+        });
+
+        article.querySelectorAll("h2").forEach((h) => {
+          const t = h.textContent.trim();
+          if (t === "Table of Contents") {
+            h.classList.add("toc-heading");
+          } else if (/^Chapter\s/i.test(t)) {
+            h.classList.add("chapter-heading");
+          } else {
+            h.classList.add("chapter-heading");
+          }
+        });
+      }
+
+      function populateToc() {
+        const container = document.getElementById("toc-chapters");
+        const article = document.getElementById("content");
+        if (!container || !article) return;
+        container.innerHTML = "";
+
+        const elements = article.querySelectorAll("h1, h2");
+        elements.forEach((el) => {
+          const text = el.textContent.trim();
+          const tag = el.tagName;
+
+          if (tag === "H1") {
+            if (text === "The Cursor Product Guide") return;
+            const div = document.createElement("div");
+            div.className = "nav-part-label";
+            div.textContent = /^Appendix$/i.test(text) ? "Appendix" : text;
+            container.appendChild(div);
+            el.setAttribute("data-section", el.id);
+            return;
+          }
+
+          if (tag === "H2") {
+            if (text === "Table of Contents") return;
+            el.setAttribute("data-section", el.id);
+            const m = text.match(/^Chapter (\d+):\s*(.+)/);
+            const a = document.createElement("a");
+            a.className = "nav-link";
+            a.href = "#" + el.id;
+            if (m) {
+              a.textContent = "Ch " + m[1] + ": " + shorten(m[2], 24);
+            } else {
+              a.textContent = shorten(text, 34);
+            }
+            container.appendChild(a);
+          }
+        });
+      }
+
+      async function renderGuide() {
+        const target = document.getElementById("content");
+        try {
+          const response = await fetch("./Cursor-Product-Guide.md", { cache: "no-store" });
+          if (!response.ok) {
+            throw new Error("Could not load Cursor-Product-Guide.md");
+          }
+          const markdown = await response.text();
+          marked.setOptions({
+            gfm: true,
+            breaks: false,
+            headerIds: true,
+            mangle: false,
+          });
+          target.innerHTML = marked.parse(markdown);
+          document.title = "Cursor Product Guide";
+          enhanceMarkdown(target);
+          populateToc();
+          if (typeof window.initPrepSiteNav === "function") {
+            window.initPrepSiteNav();
+          }
+        } catch (error) {
+          target.innerHTML =
+            "<h1>Unable to render guide</h1><p>" +
+            error.message +
+            "</p><p>Make sure <code>Cursor-Product-Guide.md</code> is in the same folder as this HTML file.</p>";
+        }
+      }
+
+      renderGuide();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tactical Question Bank — Persona & Workflow Scenarios</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .question-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 28px 20px;
+      margin: 24px 0;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .question-card .q-number {
+      position: absolute;
+      top: -12px;
+      left: 20px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+    }
+    .question-card .q-text {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--heading-color);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .question-card .q-testing {
+      font-size: 14px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .question-card .q-approach {
+      font-size: 15px;
+      color: var(--text-color);
+      line-height: 1.7;
+    }
+    .question-card .q-approach p:last-child {
+      margin-bottom: 0;
+    }
+    .section-count {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 3px 12px;
+      border-radius: 20px;
+      margin-left: 8px;
+    }
+    .practice-box {
+      background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+      border: 1px solid #bbf7d0;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin: 28px 0;
+    }
+    .practice-box h5 {
+      color: #15803d;
+      margin-top: 0;
+    }
+    .practice-box ol {
+      margin-bottom: 0;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<button class="menu-toggle" aria-label="Toggle navigation">
+  <span></span><span></span><span></span>
+</button>
+<div class="overlay"></div>
+
+<!-- ─── Sidebar ─── -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h1>Tactical Question Bank</h1>
+    <div class="subtitle">Persona Scenarios</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-part-label">Sections</div>
+    <a class="nav-link" href="#s1">CTO & VP Engineering</a>
+    <a class="nav-link" href="#s2">CISO & Security</a>
+    <a class="nav-link" href="#s3">Staff Engineer & Leads</a>
+    <a class="nav-link" href="#s4">AI-Forward Teams</a>
+    <a class="nav-link" href="#s5">AI-Hesitant Teams</a>
+    <a class="nav-link" href="#s6">Mixed-Maturity Orgs</a>
+    <a class="nav-link" href="#s7">Engineering Realities</a>
+    <a class="nav-link" href="#s8">How to Practice</a>
+
+    <div class="nav-part-label">Other guides</div>
+    <a class="nav-link" href="index.html">ADM Study Guide</a>
+    <a class="nav-link" href="technical-screen.html">Technical Screen Qs</a>
+    <a class="nav-link" href="technical-concepts.html">Technical Concepts</a>
+    <a class="nav-link" href="../../cursor-product/Cursor-Product-Guide.html">Cursor Product Guide</a>
+    <a class="nav-link" href="../../index.html">All projects</a>
+  </nav>
+  <div class="sidebar-footer">Last updated Mar 30, 2026</div>
+</aside>
+
+<!-- ─── Main content ─── -->
+<div class="main">
+<div class="content">
+
+<a href="index.html" class="back-link">&larr; Back to Study Guide</a>
+
+<div class="hero">
+  <p class="site-links">
+    <a href="index.html">ADM Study Guide</a>
+    <span class="site-links-sep" aria-hidden="true">·</span>
+    <a href="technical-screen.html">Technical Screen Qs</a>
+    <span class="site-links-sep" aria-hidden="true">&middot;</span>
+    <a href="technical-concepts.html">Technical Concepts</a>
+    <span class="site-links-sep" aria-hidden="true">&middot;</span>
+    <a href="../../cursor-product/Cursor-Product-Guide.html">Cursor Product Guide</a>
+  </p>
+  <h1>Tactical Question Bank</h1>
+  <p class="lead">More practical, persona-specific scenarios for how a CTO, CISO, or Staff Engineer interfaces with an ADM.</p>
+  <p class="meta">By Richard Reyes &middot; Practice out loud &middot; Calibrate your framing by audience</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SECTION 1                             -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="s1" id="s1">
+  <div class="part-label">Section 1</div>
+  <h2>CTO &amp; VP of Engineering Conversations <span class="section-count">6 Qs</span></h2>
+  <p class="part-intro">Budget owners and org leaders. They care about velocity, headcount, retention, and competitive advantage — and they’ve heard a hundred pitches.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q1</span>
+  <div class="q-text">"We already gave everyone Copilot licenses six months ago. Usage is at 25%. Why would I spend political capital switching to something else?"</div>
+  <div class="q-testing">What makes this hard: You’re asking them to change direction without making them look wrong.</div>
+  <div class="q-approach">
+    <p>Don’t frame it as “Copilot failed.” Frame it as “your team is ready for the next step.” The 25% usage tells you a quarter of engineers are AI-receptive — those are your champions. The question is why the other 75% didn’t stick: autocomplete-only value, lack of codebase grounding, no structured onboarding, no team-level configuration.</p>
+    <p>Your pitch: run a 3‑week side-by-side with ~15 power users to test Agent mode + codebase Q&amp;A on real work. If there’s no meaningful delta, no harm done. If there is, the CTO can present it internally as “evolving our AI strategy,” not reversing a prior decision.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q2</span>
+  <div class="q-text">"I need to justify this to my board. They want to see AI transforming our engineering org. What does that actually look like in 6 months?"</div>
+  <div class="q-testing">What makes this hard: Board narratives want clarity; engineering reality is incremental.</div>
+  <div class="q-approach">
+    <p>Give a 3‑act narrative: Foundation (pilot + activation), Momentum (wave expansion + champions), Transformation (cycle time down, onboarding faster, standards encoded in Rules). Then anchor with conservative ROI math: recovered capacity vs. annual license cost. The deliverable is a board-ready story, not a feature list.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q3</span>
+  <div class="q-text">"My VP of Platform says AI tools will create more technical debt, not less. She’s seen juniors ship AI-generated code they don’t understand. How do you respond?"</div>
+  <div class="q-testing">What makes this hard: It’s a legitimate risk backed by real behavior.</div>
+  <div class="q-approach">
+    <p>Validate the concern. Then propose guardrails: team Rules that encode architectural patterns, unchanged PR review discipline, start adoption with senior/staff engineers first, and use Plan Mode/checkpoints so approaches are reviewed before execution. Frame it as a maturity and enablement issue: with guardrails, Cursor can reduce debt by increasing consistency at scale.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q4</span>
+  <div class="q-text">"We’re in a hiring freeze. The roadmap assumes 20% more capacity. Can Cursor close that gap?"</div>
+  <div class="q-testing">What makes this hard: They want a quantifiable promise; overpromising kills trust.</div>
+  <div class="q-approach">
+    <p>Be precise: Cursor doesn’t create headcount; it recovers time from toil (boilerplate, tests, debugging, navigation, onboarding). Use typical self-reported savings (45–90 min/day) as a range, then propose a diagnostic to map their true bottlenecks. If bottlenecks are toil-heavy, Cursor can recover meaningful capacity; if bottlenecks are dependencies/infrastructure waits, Cursor helps but isn’t the whole answer.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q5</span>
+  <div class="q-text">"We’re acquiring a company next quarter. Their stack is Ruby on Rails; we’re Go and TypeScript. How does Cursor help with the integration?"</div>
+  <div class="q-testing">What makes this hard: Requires workflow thinking beyond standard rollout playbooks.</div>
+  <div class="q-approach">
+    <p>Use three wedges: codebase understanding (natural-language interrogation of unfamiliar code), translation/migration acceleration (Agent drafts cross-language ports with your patterns), and shared Rules for integration-layer consistency (API contracts, naming, error handling). M&amp;A integration is a high-ROI use case because it shifts expensive senior time from reading to shipping.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q6</span>
+  <div class="q-text">"My engineering org is 400 people across 8 time zones. How do you support a rollout that isn’t US-centric?"</div>
+  <div class="q-testing">What makes this hard: Global rollouts require async enablement and regional champions.</div>
+  <div class="q-approach">
+    <p>Use a regional champion model, async-first enablement (recordings + docs), rotating office hours across time zones, localized quick wins by region/team workflow, and unified metrics with regional cut views. Don’t assume one culture or one working pattern.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SECTION 2                             -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="s2" id="s2">
+  <div class="part-label">Section 2</div>
+  <h2>CISO &amp; Security Leadership Conversations <span class="section-count">5 Qs</span></h2>
+  <p class="part-intro">Security leaders think in risk, data flow, access control, and auditability. Expect precise, technical questions and low tolerance for vagueness.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q7</span>
+  <div class="q-text">"Walk me through the exact data flow when a developer uses Cursor Chat. What leaves their machine, where does it go, who can see it, and how long is it retained?"</div>
+  <div class="q-testing">What makes this hard: You must be concrete about data handling.</div>
+  <div class="q-approach">
+    <p>Explain: local context gathering → local prompt construction → encrypted transit for inference → response rendered in-editor. With Privacy Mode, code is not stored on Cursor servers and not used for training. Where you’re not 100% certain, use the Honest Expert framework and commit to follow up with written documentation rather than guessing.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q8</span>
+  <div class="q-text">"We’re regulated under SOX and PCI-DSS. Our developers can’t use tools that touch production data or have access to our secrets management system. How does Cursor handle that?"</div>
+  <div class="q-testing">What makes this hard: Compliance teams care about boundaries and controls.</div>
+  <div class="q-approach">
+    <p>Clarify that Cursor operates in the IDE on source code; it doesn’t connect to prod DBs/vaults by default. MCP integrations are optional and admin-controlled. The main risk is secrets in source; mitigate with proper secrets hygiene plus Rules like “never include secrets in generated code.” Propose a joint security review mapping Cursor’s data handling to their control requirements.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q9</span>
+  <div class="q-text">"What happens if Cursor has a data breach? What’s in your incident response plan, and what’s our exposure?"</div>
+  <div class="q-testing">What makes this hard: They’re testing your composure in worst-case framing.</div>
+  <div class="q-approach">
+    <p>Don’t deflect. Separate (a) Cursor’s exposure surface (especially under Privacy Mode / zero retention), (b) model-provider exposure, and (c) incident response process (notification timelines and contractual commitments). Connect them with your security team for the formal plan in writing.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q10</span>
+  <div class="q-text">"Our policy is that no developer tool can send code outside our VPC. Full stop. What are your options?"</div>
+  <div class="q-testing">What makes this hard: It’s a hard constraint; you must respect it.</div>
+  <div class="q-approach">
+    <p>Discuss self-hosted options and/or routing to a customer-hosted model endpoint within the VPC (bring-your-own-model). If evaluation will take time, propose a scoped pilot on non-sensitive code while the self-hosted architecture is assessed.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q11</span>
+  <div class="q-text">"We had an audit that flagged Copilot telemetry being sent to Microsoft. How do I know Cursor isn’t doing the same thing?"</div>
+  <div class="q-testing">What makes this hard: They’re coming with a specific past scar.</div>
+  <div class="q-approach">
+    <p>Differentiate with Privacy Mode + org-level enforcement + audit-ready transparency. Invite independent validation during the pilot (e.g., security team network traffic analysis) rather than asking for blind trust.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SECTION 3                             -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="s3" id="s3">
+  <div class="part-label">Section 3</div>
+  <h2>Staff Engineer &amp; Technical Lead Conversations <span class="section-count">5 Qs</span></h2>
+  <p class="part-intro">Technical conscience of the org. They test whether this works in the messy reality of their codebase — not in a demo.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q12</span>
+  <div class="q-text">"I spend 60% of my time reviewing PRs from 8 developers. How does Cursor help me, specifically?"</div>
+  <div class="q-testing">What makes this hard: They want workflow impact, not marketing.</div>
+  <div class="q-approach">
+    <p>Three wedges: pre-review quality via Rules (more consistent PRs), Bugbot as a first-pass filter for mechanical issues, and codebase Q&amp;A to regain context quickly during review. The reframe: reduce low-value review time so staff engineers focus on architecture and mentoring.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q13</span>
+  <div class="q-text">"Our codebase has 15 years of legacy code and a custom ORM nobody documented. Will Cursor hallucinate garbage?"</div>
+  <div class="q-testing">What makes this hard: Legacy + proprietary patterns are genuinely harder.</div>
+  <div class="q-approach">
+    <p>Be honest about the limitation, then explain how Cursor mitigates it: codebase indexing and retrieval pulls from the actual code, Rules encode local patterns, and Chat can help generate missing documentation. Propose an explicit pilot track that tests legacy areas early to calibrate trust.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q14</span>
+  <div class="q-text">"I’ve been writing Go for 12 years. The AI keeps suggesting patterns from 3 versions ago. How do I make it stop?"</div>
+  <div class="q-testing">What makes this hard: This is a common reason seniors become permanent skeptics.</div>
+  <div class="q-approach">
+    <p>Fix it with Rules (Go version + preferred libraries/patterns), @docs references to up-to-date docs, model selection, and consistent rejection of outdated patterns. The high-leverage move is turning one expert’s preferences into team-wide Rules.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q15</span>
+  <div class="q-text">"We have a 4M-line monorepo. Agent mode tries to change everything and creates chaos. What am I missing?"</div>
+  <div class="q-testing">What makes this hard: Scoping is everything at monorepo scale.</div>
+  <div class="q-approach">
+    <p>Use explicit scoping via @folder/@file, Rules that encode monorepo boundaries, and smaller, well-bounded tasks. Set expectations: monorepos push context management limits; configuration and scoping discipline are part of the rollout.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q16</span>
+  <div class="q-text">"My team writes Rust. AI tools are notoriously bad at Rust because of the borrow checker. Convince me."</div>
+  <div class="q-testing">What makes this hard: Rust’s type/ownership constraints are real.</div>
+  <div class="q-approach">
+    <p>Acknowledge it. Then reposition value: boilerplate/scaffolding, test scaffolding, codebase navigation Q&amp;A, and documentation. Recommend starting with Tab + Chat and expanding only where it proves reliable.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SECTION 4                             -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="s4" id="s4">
+  <div class="part-label">Section 4</div>
+  <h2>AI-Forward Teams — Maximizing Value <span class="section-count">3 Qs</span></h2>
+  <p class="part-intro">These teams already adopted. Now the conversation is about depth, scaling best practices, and moving from interactive assistance to workflow automation.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q17</span>
+  <div class="q-text">"We’re already heavy Cursor users — 90% weekly active. What’s the next level?"</div>
+  <div class="q-testing">What makes this hard: Requires optimization thinking, not adoption basics.</div>
+  <div class="q-approach">
+    <p>Move up the stack: Automations/Cloud Agents, MCP integrations (Linear/Sentry/etc.), advanced Rules that encode architecture decisions, shared prompt libraries, and metrics maturity (quality/cycle-time deltas, not just usage).</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q18</span>
+  <div class="q-text">"Our most productive engineer uses Agent mode for everything. Should we make everyone work that way?"</div>
+  <div class="q-testing">What makes this hard: Universalizing one power user’s workflow usually backfires.</div>
+  <div class="q-approach">
+    <p>Don’t mandate. Capture her workflows (recordings/templates), run peer workshops, and create progressive challenges so others can adopt at their trust level. Power users succeed partly because they can evaluate output; less-experienced engineers may not.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q19</span>
+  <div class="q-text">"We want Cursor to enforce our architectural standards automatically. Not just suggest — enforce. Is that possible?"</div>
+  <div class="q-testing">What makes this hard: “Enforcement” requires layered controls.</div>
+  <div class="q-approach">
+    <p>Be precise: Rules strongly guide AI output but don’t prevent manual non-compliance. For enforcement, pair Rules with linters, CI checks, and automated review. Think proactive (Rules) + reactive (lint/CI) + human judgment (review).</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SECTION 5                             -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="s5" id="s5">
+  <div class="part-label">Section 5</div>
+  <h2>AI-Hesitant &amp; Resistant Teams <span class="section-count">5 Qs</span></h2>
+  <p class="part-intro">Trust-building from zero: start small, prove safety, and let peer influence do more work than mandates.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q20</span>
+  <div class="q-text">"A respected Staff Engineer won’t use any tool that sends code to a third-party server. She’s also blocking adoption for 40 people. What do you do?"</div>
+  <div class="q-testing">What makes this hard: You can’t go around her without creating backlash.</div>
+  <div class="q-approach">
+    <p>Go through her: a 1:1 listening session, address concerns with specifics (Privacy Mode / self-hosted options), give her control to design guardrails for the pilot, and start with her lowest-risk use case. Turn a blocker into the architect of safe adoption.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q21</span>
+  <div class="q-text">"We banned AI tools after generated code introduced vulnerabilities. How do you reopen that conversation?"</div>
+  <div class="q-testing">What makes this hard: There’s organizational scar tissue and a real reason for the ban.</div>
+  <div class="q-approach">
+    <p>Don’t ask to reverse the ban; revisit the conditions for safe use. Show what’s changed (guardrails, Rules, admin controls, Privacy Mode). Propose a security-first, tightly scoped pilot with security-owned Rules and a post-pilot audit to validate outcomes.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q22</span>
+  <div class="q-text">"Half my team is in their 50s. They’ve written Java since 1.2. They think AI tools are a fad. What’s your play?"</div>
+  <div class="q-testing">What makes this hard: Patronizing veterans will permanently alienate them.</div>
+  <div class="q-approach">
+    <p>Lead with respect. Start with boring, low-friction wins (Tab for boilerplate), frame Rules as knowledge capture, and rely on peer influence rather than mandates. Avoid framing as “you’re behind.”</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q23</span>
+  <div class="q-text">"Engineers fear AI tools will be used to measure productivity and replace them. How do you address that fear?"</div>
+  <div class="q-testing">What makes this hard: It’s existential, not technical.</div>
+  <div class="q-approach">
+    <p>Take it seriously. Clarify that adoption metrics should be used for org health (activation and enablement), not individual surveillance. Recommend leadership explicitly commit that AI usage won’t be used in performance reviews, and position the tool as an investment in developer experience, not monitoring.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q24</span>
+  <div class="q-text">"I lead embedded engineers writing C for IoT devices. We don’t use VS Code. Our build system is custom. Is Cursor relevant?"</div>
+  <div class="q-testing">What makes this hard: Not every workflow is a good fit; honesty matters.</div>
+  <div class="q-approach">
+    <p>Be candid: likely not Phase 1. Where it may help: documentation, test scaffolding, and companion scripting/CI work. Position as a later-wave candidate unless the team already works in VS Code-like environments.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SECTION 6                             -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="s6" id="s6">
+  <div class="part-label">Section 6</div>
+  <h2>Mixed-Maturity Organizations <span class="section-count">4 Qs</span></h2>
+  <p class="part-intro">Most enterprises are mixed: some teams are AI-forward, some cautious, some resistant. Run coordinated rollouts with shared governance and team-specific entry points.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q25</span>
+  <div class="q-text">"Frontend wants Agent mode everywhere. Backend only wants Tab. Platform refuses AI. How do you run one rollout?"</div>
+  <div class="q-testing">What makes this hard: One-size-fits-all fails; total customization doesn’t scale.</div>
+  <div class="q-approach">
+    <p>Run three coordinated rollouts with a shared framework (admin controls, metrics dashboard, shared channel) and team-specific entry points. Use AI-forward teams as accelerators and internal proof, pragmatic teams as steady adopters, and resistant teams via 1:1 trust-building and lowest-risk use cases.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q26</span>
+  <div class="q-text">"We have 50 engineers in SF and 150 offshore contractors on a separate codebase. Should they get Cursor too?"</div>
+  <div class="q-testing">What makes this hard: Licensing, security boundaries, and rotation risk.</div>
+  <div class="q-approach">
+    <p>Weigh ROI (onboarding + consistency via Rules) against security policy and seat churn. Recommendation: include contractors in Phase 2 after the core pilot proves the playbook and security defines contractor-specific guardrails.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q27</span>
+  <div class="q-text">"Data science uses Jupyter. ML uses PyCharm. DevOps lives in the terminal. How does Cursor fit a polyglot tooling environment?"</div>
+  <div class="q-testing">What makes this hard: Not every workflow is IDE-centric; you must segment honestly.</div>
+  <div class="q-approach">
+    <p>Segment by workflow: notebooks are a strong fit; JetBrains users can be supported via ACP; terminal-centric teams benefit via infrastructure-as-code and CI/CD generation. Position Cursor as a multiplier where it fits, not a replacement for every tool.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q28</span>
+  <div class="q-text">"We’re an AI-first company. Our engineers are more technical than most customers. What does an ADM do for us?"</div>
+  <div class="q-testing">What makes this hard: The value is operational, not “teaching AI basics.”</div>
+  <div class="q-approach">
+    <p>Position the ADM as an operations multiplier: standardize Rules at scale, propagate best practices cross-team, produce exec-ready ROI reporting, maintain a tight product feedback loop, and make the best workflows reproducible via templates and enablement.</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SECTION 7                             -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="s7" id="s7">
+  <div class="part-label">Section 7</div>
+  <h2>Engineering Realities &mdash; When AI Tools Meet Production <span class="section-count">12 Qs</span></h2>
+  <p class="part-intro">Real incidents, debugging sessions, and SDLC trade-offs that surface after teams adopt Cursor &mdash; the nuanced engineering problems a credible ADM must diagnose and discuss fluently.</p>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q29</span>
+  <div class="q-text">&ldquo;Since we started using Agent mode heavily, app performance degraded. Logs show slower response times. Bugbot isn&rsquo;t flagging anything. What&rsquo;s going on?&rdquo;</div>
+  <div class="q-testing">What makes this hard: Syntactically correct code can be slow &mdash; Bugbot catches bugs, not performance anti-patterns.</div>
+  <div class="q-approach">
+    <p>Common culprits: <strong>N+1 query patterns</strong> (a DB call per loop iteration instead of a batch), missing caching / redundant computation, suboptimal data structures invisible at test scale, and accumulated micro-inefficiencies across many Agent-generated features.</p>
+    <p><strong>Recommend:</strong> Performance-focused Rules (&ldquo;always batch DB queries, note time complexity&rdquo;), APM profiling to trace degraded endpoints to specific PRs, and load testing in CI to catch regression before production.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q30</span>
+  <div class="q-text">&ldquo;A customer sees production bugs we can&rsquo;t reproduce in staging. Bugbot passed, code review passed, all tests pass. What&rsquo;s wrong?&rdquo;</div>
+  <div class="q-testing">What makes this hard: Every quality gate says &ldquo;green&rdquo; but production is broken &mdash; the gap is test depth, not quantity.</div>
+  <div class="q-approach">
+    <p>AI-generated tests tend to be <strong>shallow</strong>: happy-path only, mocked dependencies that mask real behavior, missing integration/e2e coverage, clean sample data vs. messy production data, and no concurrency testing.</p>
+    <p><strong>Recommend:</strong> Rules requiring edge-case + error-condition tests, contract testing at API boundaries, staging with production-scale data, senior review of AI-generated test files, and fault-injection testing.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q31</span>
+  <div class="q-text">&ldquo;AI-generated code is slowly diverging from our architecture. Each feature works alone, but patterns are inconsistent across services.&rdquo;</div>
+  <div class="q-testing">What makes this hard: Architectural drift is entropy &mdash; each PR looks fine but the system loses coherence.</div>
+  <div class="q-approach">
+    <p>Agent optimizes per-task, not per-system. Different devs feed different context; without canonical refs the AI draws on varied training data.</p>
+    <p><strong>Recommend:</strong> Pattern-specific Rules pointing to template files, ADRs referenced via @docs, quarterly cross-service consistency audits, and a &ldquo;golden&rdquo; template service used as Agent context.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q32</span>
+  <div class="q-text">&ldquo;Agent refactored our auth middleware. Tests pass, but security found it reordered execution &mdash; rate limiting now runs after auth instead of before.&rdquo;</div>
+  <div class="q-testing">What makes this hard: Implicit contracts (execution order, state sequences) aren&rsquo;t enforced by types or caught by typical unit tests.</div>
+  <div class="q-approach">
+    <p><strong>Recommend:</strong> Explicit Rules documenting middleware order, integration tests that validate execution sequence, Plan Mode for security-critical refactors, and &ldquo;AI-restricted zones&rdquo; in Rules for auth/security/payment code.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q33</span>
+  <div class="q-text">&ldquo;CI is 40% slower &mdash; test suite went from 2K to 8K tests in three months. Is more tests always better?&rdquo;</div>
+  <div class="q-testing">What makes this hard: Quantity does not equal quality. Test bloat slows feedback loops and creates maintenance burden.</div>
+  <div class="q-approach">
+    <p>AI easily generates redundant tests (same path, different inputs), trivial tests (validating getters), and poorly isolated tests (real DB instead of mocks).</p>
+    <p><strong>Recommend:</strong> Rules for test quality (&ldquo;distinct behavior per test, mock externals&rdquo;), CI test tiering (unit &rarr; integration &rarr; e2e), branch-coverage analysis, and periodic test audits.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q34</span>
+  <div class="q-text">&ldquo;A junior dev&rsquo;s Agent-built feature works locally but causes memory leaks that crash the pod every 4 hours in production. All tests pass.&rdquo;</div>
+  <div class="q-testing">What makes this hard: Memory leaks are invisible in short-lived test runs; they only surface under sustained load.</div>
+  <div class="q-approach">
+    <p>Typical patterns: event listeners never cleaned up, caching without eviction/TTL, closure-captured references preventing GC, connection pool exhaustion.</p>
+    <p><strong>Recommend:</strong> Rules for resource management (&ldquo;every listener needs cleanup, connections released in <code>finally</code>, caches need max size + TTL&rdquo;), memory profiling under sustained load in staging, and senior review for I/O-heavy features.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q35</span>
+  <div class="q-text">&ldquo;15 new API endpoints shipped fast with Cursor. Consumers report inconsistent error response formats across them.&rdquo;</div>
+  <div class="q-testing">What makes this hard: Each endpoint was generated independently and picked up different response patterns.</div>
+  <div class="q-approach">
+    <p><strong>Recommend:</strong> OpenAPI spec referenced in Rules, shared response helper utilities (<code>sendSuccess</code>/<code>sendError</code>), contract tests validating response shapes in CI, and API linting (e.g., Spectral) blocking non-compliant PRs.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q36</span>
+  <div class="q-text">&ldquo;PRs ship 30% faster since adopting Cursor. But rollback rate also increased. What&rsquo;s going on?&rdquo;</div>
+  <div class="q-testing">What makes this hard: Faster velocity + more rollbacks = quality gates didn&rsquo;t scale with speed.</div>
+  <div class="q-approach">
+    <p>Causes: review becomes rubber-stamp on clean-looking AI output, test depth didn&rsquo;t match quantity, staging/QA compressed, devs may not fully understand Agent-generated code.</p>
+    <p><strong>Recommend:</strong> Review checklist (&ldquo;I understand every line + failure modes&rdquo;), rollback-to-PR ratio as a metric, progressive rollouts (canary/feature flags), and post-rollback retros.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q37</span>
+  <div class="q-text">&ldquo;Cursor keeps suggesting imports from a deprecated internal library we migrated away from 6 months ago.&rdquo;</div>
+  <div class="q-testing">What makes this hard: The codebase index treats deprecated code as valid because it still exists in the repo.</div>
+  <div class="q-approach">
+    <p><strong>Recommend:</strong> Rule explicitly marking the library as deprecated with the replacement path, <code>.cursorignore</code> to exclude the directory from indexing, and &mdash; best of all &mdash; finish the migration and delete the dead code (use Agent to help).</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q38</span>
+  <div class="q-text">&ldquo;AI-generated SQL queries work in dev but cause table locks and timeouts in production with 500M rows.&rdquo;</div>
+  <div class="q-testing">What makes this hard: Logically correct SQL can be operationally catastrophic at scale.</div>
+  <div class="q-approach">
+    <p>Issues: full table scans on non-indexed columns, unbounded SELECTs, missing pagination, expensive JOINs, broad UPDATEs locking millions of rows.</p>
+    <p><strong>Recommend:</strong> DB-specific Rules (&ldquo;LIMIT required, verify indexes, EXPLAIN ANALYZE&rdquo;), DBA review for AI-generated queries, staging with production-scale data, and slow-query alerts.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q39</span>
+  <div class="q-text">&ldquo;Two developers both used Agent to modify the same shared service. Neither knew. Now we have merge conflicts and broken integration.&rdquo;</div>
+  <div class="q-testing">What makes this hard: AI accelerates individual work but doesn&rsquo;t solve coordination.</div>
+  <div class="q-approach">
+    <p><strong>Recommend:</strong> CODEOWNERS for shared services, short-lived branches + frequent integration, Rules prompting team check-in before modifying shared code, feature flags over long branches, and standup visibility.</p>
+  </div>
+</div>
+
+<div class="question-card">
+  <span class="q-number">Q40</span>
+  <div class="q-text">&ldquo;Agent keeps importing unapproved third-party packages. Our security policy requires dependency review. How do we enforce this?&rdquo;</div>
+  <div class="q-testing">What makes this hard: The AI freely suggests libraries without awareness of the org&rsquo;s approved list.</div>
+  <div class="q-approach">
+    <p><strong>Recommend:</strong> Rules referencing an approved-packages doc, CI that blocks PRs adding new deps without approval, dependency scanning (Snyk/Socket/Dependabot), and pre-commit hooks checking imports against an allowlist.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SECTION 8                             -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="part-header" data-section="s8" id="s8">
+  <div class="part-label">Section 8</div>
+  <h2>How to Practice</h2>
+  <p class="part-intro">Practice like real meetings &mdash; persona shifts, engineering incidents, follow-ups, and time limits.</p>
+</div>
+
+<div class="practice-box">
+  <h5>High-Impact Practice Drills</h5>
+  <ol>
+    <li><strong>Role-play by persona</strong> &mdash; Answer 3&ndash;4 questions in a row as if it&rsquo;s one continuous meeting.</li>
+    <li><strong>Practice &ldquo;I don&rsquo;t know&rdquo; moments</strong> &mdash; For security/data flow questions, practice the Honest Expert framework.</li>
+    <li><strong>Stack two personas</strong> &mdash; Pivot between CTO framing and Staff Engineer framing mid-stream.</li>
+    <li><strong>Time box</strong> &mdash; 90 seconds for a direct question; 2 minutes max for a scenario.</li>
+    <li><strong>Record and listen</strong> &mdash; Listen for defensiveness, vagueness, or missing empathy.</li>
+    <li><strong>Adoption spectrum drill</strong> &mdash; Position the same feature three ways: AI-forward, pragmatic, resistant.</li>
+    <li><strong>Engineering incident drill</strong> &mdash; For Section 7 Qs: (a) diagnose root cause, (b) explain why AI contributed without blaming the tool, (c) recommend guardrails.</li>
+    <li><strong>&ldquo;Why did AI miss this?&rdquo;</strong> &mdash; Pick any Q29&ndash;Q40 and explain to an imaginary VP why Bugbot/tests/review didn&rsquo;t catch it. Forces you to understand each quality layer&rsquo;s blind spots.</li>
+  </ol>
+</div>
+
+<hr>
+
+<p style="text-align: center; color: var(--text-light); font-size: 14px; margin-top: 48px;">
+  Last updated March 30, 2026 &middot; These are the conversations that separate a good ADM from a great one.
+</p>
+
+</div>
+</div>
+
+<button class="back-to-top" aria-label="Back to top">&uarr;</button>
+
+<script src="script.js"></script>
+</body>
+</html>
