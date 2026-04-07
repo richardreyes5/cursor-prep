@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "python3 scripts/parse_content.py && vite build",
+    "build:gh-pages": "python3 scripts/parse_content.py && vite build --base=/cursor-prep/study-game/dist/",
     "preview": "vite preview",
     "parse": "python3 scripts/parse_content.py"
   },
